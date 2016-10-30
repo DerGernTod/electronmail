@@ -1,0 +1,1 @@
+var babel = require('babel-standalone');
