@@ -1,0 +1,31 @@
+@import "../main";
+@fadeOutTime: 200ms;
+@fadeInTime: 360ms;
+@fadeFromLeftStart: calc(@menuContainerWidth);
+@fadeFromLeftEnd: calc(@menuContainerWidth + 50px);
+@transitionDelay: 100ms;
+.content-fade-enter, .content-fade-appear {
+  opacity: 0.01;
+  left: @fadeFromLeftEnd;
+}
+
+.content-fade-enter.content-fade-enter-active, .content-fade-appear.content-fade-appear-active {
+  opacity: 1;
+  left: @fadeFromLeftStart;
+  transition: 
+    opacity @fadeInTime ease-in @transitionDelay, 
+    left @fadeInTime cubic-bezier(0.1, 0.2, 0.3, 1.0) @transitionDelay;
+}
+
+.content-fade-leave {
+  opacity: 1;
+  left: @fadeFromLeftStart;
+}
+
+.content-fade-leave.content-fade-leave-active {
+  opacity: 0.01;
+  left: @fadeFromLeftEnd;
+  transition: 
+    opacity @fadeOutTime ease-in @transitionDelay, 
+    left @fadeOutTime ease-in @transitionDelay;
+}

@@ -1,0 +1,37 @@
+@import "../main";
+@mailPreviewWidth : 250px;
+@contentPaneWidth : calc(~"100% - " @mailPreviewWidth);
+@contentPaneBackground: rgb(37,37,38);
+.mail-preview{
+    width: @mailPreviewWidth;
+    height: 100%;
+    background-color: @contentBackground;
+    ol {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        li{
+            padding: 0;
+            margin: 0;
+            border-bottom: 1px solid @menuPaneBackground;
+            & > a{
+                display: block;
+                padding: 5px;
+                transition: background-color 300ms linear;
+            }
+            &:active{
+                
+            }
+            &:hover, a.active{
+                background-color: rgb(230,230,230);
+                color: black;
+                transition: background-color 300ms linear;
+            }
+        }
+    }
+}
+.content-pane{
+    width: @contentPaneWidth;
+    height: 100%;
+    background-color: @contentPaneBackground;
+}
