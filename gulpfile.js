@@ -11,7 +11,7 @@ gulp.task('scripts', function(){
         .pipe(gulp.dest('dist/js'));
 });
 gulp.task('less', function(){
-    console.log(new Date().toDateString() + ": rebuilding styles...");
+    console.log(new Date().toTimeString() + ": rebuilding styles...");
     return gulp.src(['source/less/**/*.less'])
         .pipe(less())
         .pipe(sourcemaps.init())

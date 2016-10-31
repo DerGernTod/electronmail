@@ -1,0 +1,32 @@
+@import "../main";
+@import "./mail";
+@fadeOutTime: 200ms;
+@fadeInTime: 360ms;
+@fadeFromLeftStart: calc(@mailPreviewWidth);
+@fadeFromLeftEnd: calc(@mailPreviewWidth + 50px);
+@transitionDelay: 100ms;
+.content-pane-fade-enter, .content-pane-fade-appear {
+  opacity: 0.01;
+  left: @fadeFromLeftEnd;
+}
+
+.content-pane-fade-enter.content-pane-fade-enter-active, .content-pane-fade-appear.content-pane-fade-appear-active {
+  opacity: 1;
+  left: @fadeFromLeftStart;
+  transition: 
+    opacity @fadeInTime ease-in @transitionDelay, 
+    left @fadeInTime cubic-bezier(0.1, 0.2, 0.3, 1.0) @transitionDelay;
+}
+
+.content-pane-fade-leave {
+  opacity: 1;
+  left: @fadeFromLeftStart;
+}
+
+.content-pane-fade-leave.content-pane-fade-leave-active {
+  opacity: 0.01;
+  left: @fadeFromLeftEnd;
+  transition: 
+    opacity @fadeOutTime ease-in @transitionDelay, 
+    left @fadeOutTime ease-in @transitionDelay;
+}

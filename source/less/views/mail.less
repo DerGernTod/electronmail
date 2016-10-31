@@ -17,21 +17,39 @@
             & > a{
                 display: block;
                 padding: 5px;
-                transition: background-color 300ms linear;
-            }
-            &:active{
-                
-            }
-            &:hover, a.active{
-                background-color: rgb(230,230,230);
-                color: black;
-                transition: background-color 300ms linear;
-            }
+                background-color: @contentBackground;
+                transition: all .1s linear;
+                text-decoration: none;
+                color: @textcolor;
+                @keyframes popInPreview{
+                    0% { padding-left: 10px; }
+                    20% { padding-left: 25px; }
+                    100% { padding-left: 10px; }
+                }
+                &.active, &.active:hover{
+                    background-color: @textcolor;
+                    animation: popInPreview 500ms ease-out;
+                    color: @menuPaneBackground;
+                    padding-left: 10px;
+                }
+                &:hover{
+                    background-color: @menuPaneBackground + 10;
+                    color: @textcolor + 10;
+                    padding-left: 10px;
+                }
+            } 
         }
     }
 }
-.content-pane{
+.contentpane{
     width: @contentPaneWidth;
     height: 100%;
     background-color: @contentPaneBackground;
+    max-width: 100%;
+    color: @textcolor;
+    & > div{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
 }

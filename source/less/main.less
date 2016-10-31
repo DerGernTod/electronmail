@@ -4,7 +4,7 @@
 @menuContainerWidth: 160px;
 @menuPaneBackground: rgb(45,49,50);
 
-@keyframes popIn{
+@keyframes popInMainMenu{
     0% { padding-left: 35px; }
     20% { padding-left: 50px; }
     100% { padding-left: 35px; }
@@ -45,7 +45,7 @@
             color: @textcolor;
             &.active, &.active:hover{
                 background-color: @menuHighlight;
-                animation: popIn .5s ease-out;
+                animation: popInMainMenu .5s ease-out;
                 padding-left: 35px;
             }
             &:hover{

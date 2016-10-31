@@ -27632,7 +27632,20 @@
 	            'div',
 	            null,
 	            _react2.default.createElement(_Preview2.default, { mails: mails, accounts: this.state.accounts.join(";"), folder: this.state.folder, className: 'float-left mail-preview' }),
-	            this.props.children
+	            _react2.default.createElement(
+	                _reactAddonsCssTransitionGroup2.default,
+	                {
+	                    component: 'div',
+	                    className: 'contentpane float-left',
+	                    transitionName: 'content-pane-fade',
+	                    transitionEnterTimeout: 500,
+	                    transitionLeaveTimeout: 500,
+	                    transitionAppear: true,
+	                    transitionAppearTimeout: 500 },
+	                _react2.default.cloneElement(this.props.children, {
+	                    key: location.hash
+	                })
+	            )
 	        );
 	    }
 	});

@@ -47,7 +47,19 @@ const Mail = React.createClass({
         return (
             <div>
                 <Preview mails={mails} accounts={this.state.accounts.join(";")} folder={this.state.folder} className="float-left mail-preview" />
-                {this.props.children}
+                
+                <ReactCSSTransitionGroup 
+                    component="div"
+                    className="contentpane float-left"
+                    transitionName="content-pane-fade"
+                    transitionEnterTimeout={500}
+                    transitionLeaveTimeout={500}
+                    transitionAppear={true}
+                    transitionAppearTimeout={500}>
+                    {React.cloneElement(this.props.children, {
+                        key: location.hash
+                    })}
+                </ReactCSSTransitionGroup>
             </div>
         );
     }
