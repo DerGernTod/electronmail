@@ -1,11 +1,48 @@
 @import "../main";
 @mailPreviewWidth : 250px;
+@mailPreviewAuthorWidth: 117px;
 @contentPaneWidth : calc(~"100% - " @mailPreviewWidth);
 @contentPaneBackground: rgb(37,37,38);
 .mail-preview{
     width: @mailPreviewWidth;
     height: 100%;
     background-color: @contentBackground;
+    .unread{
+        border-left: @menuHighlight 3px solid;
+    }
+    .author{
+        font-weight: bold;
+        font-size: 12pt;
+        float: left;
+        overflow: hidden;
+        height: 16pt;
+        width: @mailPreviewAuthorWidth;
+        white-space: nowrap;
+        line-height: 13pt;
+    }
+    .date{
+        color: @textcolor - 100;
+        width: 90px;
+        font-size: 7pt;
+        text-align: right;
+        white-space: nowrap;
+        float: left;
+    }
+    .title{
+        clear: both;
+        white-space: nowrap;
+        overflow: hidden;
+        font-weight: bold;
+        font-size: 10pt;
+        line-height: 11pt;
+        padding: 4px 0;
+    }
+    .excerpt{
+        overflow: hidden;
+        font-size: 8pt;
+        width: @mailPreviewWidth - 40px;
+        color: rgb(100,100,100);
+    }
     ol {
         list-style: none;
         padding: 0;
@@ -14,33 +51,55 @@
             padding: 0;
             margin: 0;
             border-bottom: 1px solid @menuPaneBackground;
+            height: 100px;
+            overflow: hidden;
             & > a{
+                height: 100%;
+                @defaultPadding: 10px;
                 display: block;
-                padding: 5px;
+                padding: @defaultPadding;
                 background-color: @contentBackground;
                 transition: all .1s linear;
                 text-decoration: none;
                 color: @textcolor;
                 @keyframes popInPreview{
-                    0% { padding-left: 10px; }
-                    20% { padding-left: 25px; }
-                    100% { padding-left: 10px; }
+                    0% { padding-left: @defaultPadding + 5px; }
+                    20% { padding-left: @defaultPadding + 20px; }
+                    100% { padding-left: @defaultPadding + 5px; }
+                }
+                .textBlurMixin(@startColor, @endColor){
+                    background: linear-gradient(to right, @startColor 90%, @endColor 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+                & div:not(.date):not(.excerpt){
+                    .textBlurMixin(@textcolor, @contentBackground);
                 }
                 &.active, &.active:hover{
                     background-color: @textcolor;
                     animation: popInPreview 500ms ease-out;
                     color: @menuPaneBackground;
-                    padding-left: 10px;
+                    padding-left: @defaultPadding + 5px;
+                    & div:not(.date):not(.excerpt) {
+                        .textBlurMixin(@menuPaneBackground, @textcolor);
+                    }
                 }
                 &:hover{
-                    background-color: @menuPaneBackground + 10;
-                    color: @textcolor + 10;
-                    padding-left: 10px;
+                    @hoverBackground: @menuPaneBackground + 10;
+                    @hoverColor: @textcolor + 10;
+                    background-color: @hoverBackground;
+                    color: @hoverColor;
+                    padding-left: @defaultPadding + 5px;
+                    & div:not(.date):not(.excerpt) {
+                        .textBlurMixin(@hoverColor, @hoverBackground);
+                    }
                 }
             } 
         }
     }
 }
+
+
 .contentpane{
     width: @contentPaneWidth;
     height: 100%;

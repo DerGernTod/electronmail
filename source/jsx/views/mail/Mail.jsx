@@ -20,24 +20,38 @@ const Mail = React.createClass({
         //TODO: look in db here
         return [
             { 
-                author: "node", 
+                author: "some author with a weirdly long name that also doesn't fit into the title view", 
                 title: "some title",
-                excerpt: "lorem ipsum dolor sit amet. consetetur sadipecing elitr.",
+                content: "lorem ipsum dolor sit amet. consetetur sadipecing elitr.",
                 date: Date.now(),
-                id: 0
+                id: 0,
+                unread: true
             },
             { 
                 author: "noderich", 
-                title: "some title 2",
-                excerpt: "lorem ipsum dolor sit amet. consetetur sadipecing elitr.",
-                date: Date.now() - 50,
+                title: "some longer title that doesn't fit into the title view",
+                content: `At vero eos et accusam et justo duo dolores et ea rebum. 
+                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor 
+                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam 
+                et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem 
+                ipsum dolor sit amet.
+                `,
+                date: Date.now() - 60000,
                 id: 1
             },
             { 
                 author: "noderino", 
                 title: "some title 3",
-                excerpt: "lorem ipsum dolor sit amet. consetetur sadipecing elitr.",
-                date: Date.now() - 100,
+                content: `Lorem sönderzeichen %ß µ ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor 
+                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo 
+                duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit 
+                amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor 
+                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et 
+                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor 
+                sit amet.`,
+                date: Date.now() - 60000*60,
+                unread: true,
                 id: 2
             }
         ];

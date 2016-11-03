@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
+import moment from 'moment';
 const Preview = React.createClass({
     getInitialState : function(){
         return { mails : []}
@@ -11,13 +12,15 @@ const Preview = React.createClass({
     },
     buildMailPreview : function(mail){
         var linkTarget = "mail/" + this.props.accounts + "/" + this.props.folder + "/" + mail.id
+        var content = mail.content;
+        content = content.length > 80 ? `${content.substr(0, 77)}...` : content;
         return (
-            <li key={mail.id}>
+            <li key={mail.id} className={mail.unread ? 'unread' : ''}>
                 <Link to={linkTarget} activeClassName="active">
-                    <div>{mail.author}</div>
-                    <div>{mail.title}</div>
-                    <div>{mail.excerpt}</div>
-                    <div>{mail.date}</div>   
+                    <div className='author'>{mail.author}</div>
+                    <div className='date'>{moment(mail.date).fromNow()}</div>  
+                    <div className='title'>{mail.title}</div>
+                    <div className='excerpt'>{content}</div> 
                 </Link>
             </li>
         );

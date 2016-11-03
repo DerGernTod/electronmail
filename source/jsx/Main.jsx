@@ -19,6 +19,11 @@ const Main = React.createClass({
                         <Link to="/mail/accounts/thrash" activeClassName="active">Thrash</Link>
                     </nav>
                     <nav>
+                        <div><span className="fa fa-download"> </span>Attachments</div>
+                        <Link to="/attachments/collection" activeClassName="active">Collection</Link>
+                        <Link to="/attachments/collection2" activeClassName="active">Add Folder</Link>
+                    </nav>
+                    <nav>
                         <div><span className="fa fa-cogs"> </span>Configuration</div>
                         <Link to="/settings/accounts" activeClassName="active">Accounts</Link>
                         <Link to="/settings/calendar" activeClassName="active">Calendar</Link>

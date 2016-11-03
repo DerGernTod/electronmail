@@ -10,6 +10,7 @@ import Profile from './views/settings/Profile.jsx';
 import Synchronization from './views/settings/Synchronization.jsx';
 import Mail from './views/mail/Mail.jsx';
 import ContentPane from './views/mail/ContentPane.jsx';
+import Attachments from './views/attachments/Attachments.jsx';
 var routes = (
     <Router history={hashHistory}>
         <Route path="/" component={Main}>
@@ -17,6 +18,10 @@ var routes = (
             <Route path="/mail/:accounts/:folder" component={Mail}>
                 <IndexRoute component={ContentPane}/>
                 <Route path="/mail/:accounts/:folder/:mailid" component={ContentPane} />
+            </Route>
+            <Route path="/attachments" component={Test}>
+                <IndexRoute component={Attachments}/>
+                <Route path="/attachments/collection" component={Attachments} />
             </Route>
             <Route path="/settings" component={Settings}>
                 <Route path="/settings/accounts" component={Accounts}/>
