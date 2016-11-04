@@ -3,6 +3,51 @@
 @mailPreviewAuthorWidth: 117px;
 @contentPaneWidth : calc(~"100% - " @mailPreviewWidth);
 @contentPaneBackground: rgb(37,37,38);
+@panelBackgroundColor: @textcolor + 10;
+.history-mail-single{
+    padding: 15px;
+    & > div {
+        background-color: @panelBackgroundColor;
+    }
+}
+.contentpane-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    //background-color: @textcolor;
+    //color: @menuPaneBackground;
+}
+.mail-content{
+    background-color: @panelBackgroundColor;
+}
+.mail-header{
+    padding: 0 50px 25px;
+    border: 1px solid @textcolor;
+    background-color: @panelBackgroundColor;
+    a{
+        text-decoration: none;
+    }
+    & > div {
+        display: flex;
+        flex-direction: row;
+        padding-right: 5px;
+        &::first-child a{
+            font-weight: bold;
+            color: @menuHighlight;
+        }
+        a::active, a::visited{
+            color: @menuPaneBackground;
+        }
+        & > .recipients > a{
+            &:nth-child(n+4){
+                display: none;
+            }
+            &:nth-child(n+3)::after{
+                content: " more...";
+            }
+        }
+    }
+}
 .mail-preview{
     width: @mailPreviewWidth;
     height: 100%;
@@ -103,9 +148,9 @@
 .contentpane{
     width: @contentPaneWidth;
     height: 100%;
-    background-color: @contentPaneBackground;
     max-width: 100%;
-    color: @textcolor;
+    background-color: @textcolor;
+    color: @menuPaneBackground;
     & > div{
         position: absolute;
         width: 100%;

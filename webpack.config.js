@@ -6,6 +6,10 @@ var APP_DIR = path.resolve(__dirname, 'source/jsx');
 
 var config = {
     entry : APP_DIR + '/App.jsx',
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin()
+    ],
     module : {
         loaders : [
             {

@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Preview from './Preview.jsx';
 import ContentPane from './ContentPane.jsx';
+import Constants from '../../Constants.jsx';
 const Mail = React.createClass({
     getInitialState : function(){
         return {
@@ -18,43 +19,7 @@ const Mail = React.createClass({
     },
     getMails : function(){
         //TODO: look in db here
-        return [
-            { 
-                author: "some author with a weirdly long name that also doesn't fit into the title view", 
-                title: "some title",
-                content: "lorem ipsum dolor sit amet. consetetur sadipecing elitr.",
-                date: Date.now(),
-                id: 0,
-                unread: true
-            },
-            { 
-                author: "noderich", 
-                title: "some longer title that doesn't fit into the title view",
-                content: `At vero eos et accusam et justo duo dolores et ea rebum. 
-                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. 
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor 
-                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam 
-                et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem 
-                ipsum dolor sit amet.
-                `,
-                date: Date.now() - 60000,
-                id: 1
-            },
-            { 
-                author: "noderino", 
-                title: "some title 3",
-                content: `Lorem sönderzeichen %ß µ ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor 
-                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo 
-                duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit 
-                amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor 
-                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et 
-                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor 
-                sit amet.`,
-                date: Date.now() - 60000*60,
-                unread: true,
-                id: 2
-            }
-        ];
+        return Constants.MAILS;
     },
     render : function(){
         var mails = this.getMails();

@@ -17,7 +17,7 @@ const Preview = React.createClass({
         return (
             <li key={mail.id} className={mail.unread ? 'unread' : ''}>
                 <Link to={linkTarget} activeClassName="active">
-                    <div className='author'>{mail.author}</div>
+                    <div className='author'>{mail.author.name}</div>
                     <div className='date'>{moment(mail.date).fromNow()}</div>  
                     <div className='title'>{mail.title}</div>
                     <div className='excerpt'>{content}</div> 
