@@ -1,17 +1,25 @@
 import React from 'react';
 import HistoryMail from './HistoryMail.jsx';
 const HistoryPane = React.createClass({
-    componentWillReceiveProps(){
+    componentWillReceiveProps(nextProps){
         this.setState({
-            history : this.props.history || []
+            history : nextProps.history || []
         });
     },
     getInitialState(){
         return { history : []};
     },
     render(){
+        var key = 0;
         var historyMails = this.state.history.map(function(value){
-            return (<HistoryMail author={value.author} recipients={value.recipients}>{value.content}</HistoryMail>);
+
+            return (
+                <HistoryMail
+                    key={key++} 
+                    author={value.author} 
+                    recipients={value.recipients}>
+                    {value.content}
+                </HistoryMail>);
         });
         return (
             <div>

@@ -1,17 +1,18 @@
 import React from 'react';
+import Constants from '../../Constants.jsx';
 const MailHeader = React.createClass({
-    componentWillReceiveProps() {
+    componentWillReceiveProps(nextProps) {
         this.setState({
-            author: this.props.author || 'noone',
-            recipients: this.props.recipients || ['nobody@recipient.com'],
-            title: this.props.title || 'nothing'
+            author: nextProps.author || Constants.EMPTY_AUTHOR,
+            recipients: nextProps.recipients || Constants.EMPTY_RECIPIENTS,
+            title: nextProps.title || Constants.EMPTY_TITLE
         });
     },
     getInitialState() {
         return {
-            author: 'someone',
-            recipients: ['somebody@recipient.com'],
-            title: 'something'
+            author: Constants.EMPTY_AUTHOR,
+            recipients: Constants.EMPTY_RECIPIENTS,
+            title: Constants.EMPTY_TITLE
         }
     },
     render() {
@@ -26,9 +27,13 @@ const MailHeader = React.createClass({
             return <a key={val} href={mailtoLink}>{prepend}{val}</a>;
         });
         var mailLink = `mailto:${this.state.author.email}`;
+        var title = '';
+        if(this.state.title != Constants.EMPTY_TITLE){
+            title = (<h1>{this.state.title}</h1>);
+        }
         return (
             <div className='mail-header'>
-                <h1>{this.state.title}</h1>
+                {title}
                 <div>
                     <a href={mailLink} title={mailLink}>{this.state.author.name}</a> to {recipients} 
                 </div>

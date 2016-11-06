@@ -63,7 +63,7 @@
 /******/ 	}
 
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7a4fa3e9ebb5fadf7ab3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ce7a4e7acc65e7acaa9b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 
@@ -35080,7 +35080,7 @@
 
 	var _ContentPane2 = _interopRequireDefault(_ContentPane);
 
-	var _Constants = __webpack_require__(509);
+	var _Constants = __webpack_require__(507);
 
 	var _Constants2 = _interopRequireDefault(_Constants);
 
@@ -49703,11 +49703,11 @@
 
 	var _MailHeader2 = _interopRequireDefault(_MailHeader);
 
-	var _HistoryPane = __webpack_require__(507);
+	var _HistoryPane = __webpack_require__(508);
 
 	var _HistoryPane2 = _interopRequireDefault(_HistoryPane);
 
-	var _Constants = __webpack_require__(509);
+	var _Constants = __webpack_require__(507);
 
 	var _Constants2 = _interopRequireDefault(_Constants);
 
@@ -49746,6 +49746,13 @@
 	            }.bind(this))
 	        });
 	    },
+	    componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	        this.setState({
+	            mail: _Constants2.default.MAILS.find(function (entry) {
+	                return entry.id == Number(this.props.params.mailid);
+	            }.bind(this))
+	        });
+	    },
 	    getInitialState: function getInitialState() {
 	        return {
 	            mail: {}
@@ -49755,6 +49762,7 @@
 	        var mailId = this.props.params.mailid;
 	        var content = mailId || -1;
 	        var header = "Nothing to show";
+	        var history = [];
 	        if (!mailId) {
 	            content = "select a mail to view!";
 	        } else {
@@ -49763,6 +49771,7 @@
 	                recipients: this.state.mail.recipients,
 	                title: this.state.mail.title });
 	            content = this.state.mail.content;
+	            history = this.state.mail.history;
 	        }
 
 	        return _react3.default.createElement(
@@ -49774,7 +49783,7 @@
 	                { className: 'mail-content' },
 	                content
 	            ),
-	            _react3.default.createElement(_HistoryPane2.default, null)
+	            _react3.default.createElement(_HistoryPane2.default, { history: history })
 	        );
 	    }
 	}));
@@ -49807,6 +49816,10 @@
 
 	var _reactTransformHmr4 = _interopRequireDefault(_reactTransformHmr3);
 
+	var _Constants = __webpack_require__(507);
+
+	var _Constants2 = _interopRequireDefault(_Constants);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var _components = {
@@ -49835,18 +49848,18 @@
 
 	var MailHeader = _wrapComponent('_component')(_react3.default.createClass({
 	    displayName: 'MailHeader',
-	    componentWillReceiveProps: function componentWillReceiveProps() {
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
 	        this.setState({
-	            author: this.props.author || 'noone',
-	            recipients: this.props.recipients || ['nobody@recipient.com'],
-	            title: this.props.title || 'nothing'
+	            author: nextProps.author || _Constants2.default.EMPTY_AUTHOR,
+	            recipients: nextProps.recipients || _Constants2.default.EMPTY_RECIPIENTS,
+	            title: nextProps.title || _Constants2.default.EMPTY_TITLE
 	        });
 	    },
 	    getInitialState: function getInitialState() {
 	        return {
-	            author: 'someone',
-	            recipients: ['somebody@recipient.com'],
-	            title: 'something'
+	            author: _Constants2.default.EMPTY_AUTHOR,
+	            recipients: _Constants2.default.EMPTY_RECIPIENTS,
+	            title: _Constants2.default.EMPTY_TITLE
 	        };
 	    },
 	    render: function render() {
@@ -49866,14 +49879,18 @@
 	            );
 	        });
 	        var mailLink = 'mailto:' + this.state.author.email;
-	        return _react3.default.createElement(
-	            'div',
-	            { className: 'mail-header' },
-	            _react3.default.createElement(
+	        var title = '';
+	        if (this.state.title != _Constants2.default.EMPTY_TITLE) {
+	            title = _react3.default.createElement(
 	                'h1',
 	                null,
 	                this.state.title
-	            ),
+	            );
+	        }
+	        return _react3.default.createElement(
+	            'div',
+	            { className: 'mail-header' },
+	            title,
 	            _react3.default.createElement(
 	                'div',
 	                null,
@@ -49893,6 +49910,89 @@
 
 /***/ },
 /* 507 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var EMPTY_AUTHOR = {
+	    name: 'Noone',
+	    email: 'no@one.com'
+	};
+	var EMPTY_RECIPIENTS = ['no@one.other.com'];
+	var EMPTY_TITLE = 'some_empty_title_identifier';
+	var MAILS = [{
+	    author: {
+	        name: "some author with a weirdly long name that also doesn't fit into the title view",
+	        email: 'somereallylongemailaddress@somelongerdomain.reallylong.example.com'
+	    },
+	    title: "some title",
+	    content: "lorem ipsum dolor sit amet. consetetur sadipecing elitr.",
+	    date: Date.now(),
+	    id: 0,
+	    unread: true,
+	    recipients: ['node@radiatedpixel.com']
+	}, {
+	    author: {
+	        name: "noderich",
+	        email: 'noderich@gmail.com'
+	    },
+	    title: "some longer title that doesn't fit into the title view",
+	    content: 'At vero eos et accusam et justo duo dolores et ea rebum. \n                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. \n                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor \n                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam \n                et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem \n                ipsum dolor sit amet.\n                ',
+	    date: Date.now() - 60000,
+	    id: 1,
+	    recipients: ['gernot@raudner.at', 'some@dude.com']
+	}, {
+	    author: {
+	        name: "noderino",
+	        email: 'noderino@nodensens.com'
+	    },
+	    title: "re: some title 3",
+	    content: 'Lorem s\xF6nderzeichen %\xDF \xB5 ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor \n                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo \n                duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit \n                amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor \n                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et \n                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor \n                sit amet.',
+	    date: Date.now() - 60000 * 60,
+	    unread: true,
+	    id: 2,
+	    recipients: ['node@radiatedpixel.com', 'tom@radiatedpixel.com', 'evabrucker@aon.at', 'someone@dudens.at', 'john@doe.com', 'somereallylongemailaddress@somelongerdomain.reallylong.example.com'],
+	    history: [{
+	        author: {
+	            name: "noderich",
+	            email: 'noderich@gmail.com'
+	        },
+	        title: "re: some title 3",
+	        content: 'At vero eos et accusam et justo duo dolores et ea rebum. \n                        Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. \n                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor \n                        invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam \n                        et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem \n                        ipsum dolor sit amet.\n                        ',
+	        date: Date.now() - 60000,
+	        id: 1,
+	        recipients: ['gernot@raudner.at', 'some@dude.com']
+	    }, {
+	        author: {
+	            name: "some author with a weirdly long name that also doesn't fit into the title view",
+	            email: 'somereallylongemailaddress@somelongerdomain.reallylong.example.com'
+	        },
+	        title: "some title 3",
+	        content: "lorem ipsum dolor sit amet. consetetur sadipecing elitr.",
+	        date: Date.now(),
+	        id: 0,
+	        unread: true,
+	        recipients: ['node@radiatedpixel.com', 'tom@radiatedpixel.com', 'evabrucker@aon.at', 'someone@dudens.at', 'john@doe.com', 'somereallylongemailaddress@somelongerdomain.reallylong.example.com']
+	    }, {
+	        author: {
+	            name: "noderich",
+	            email: 'noderich@gmail.com'
+	        },
+	        title: "some longer title that doesn't fit into the title view",
+	        content: 'At vero eos et accusam et justo duo dolores et ea rebum. \n                        Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. \n                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor \n                        invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam \n                        et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem \n                        ipsum dolor sit amet.\n                        ',
+	        date: Date.now() - 60000,
+	        id: 1,
+	        recipients: ['gernot@raudner.at', 'some@dude.com']
+	    }]
+	}];
+	var Constants = { MAILS: MAILS, EMPTY_AUTHOR: EMPTY_AUTHOR, EMPTY_RECIPIENTS: EMPTY_RECIPIENTS, EMPTY_TITLE: EMPTY_TITLE };
+	exports.default = Constants;
+
+/***/ },
+/* 508 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {'use strict';
@@ -49917,7 +50017,7 @@
 
 	var _reactTransformHmr4 = _interopRequireDefault(_reactTransformHmr3);
 
-	var _HistoryMail = __webpack_require__(508);
+	var _HistoryMail = __webpack_require__(509);
 
 	var _HistoryMail2 = _interopRequireDefault(_HistoryMail);
 
@@ -49949,19 +50049,24 @@
 
 	var HistoryPane = _wrapComponent('_component')(_react3.default.createClass({
 	    displayName: 'HistoryPane',
-	    componentWillReceiveProps: function componentWillReceiveProps() {
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
 	        this.setState({
-	            history: this.props.history || []
+	            history: nextProps.history || []
 	        });
 	    },
 	    getInitialState: function getInitialState() {
 	        return { history: [] };
 	    },
 	    render: function render() {
+	        var key = 0;
 	        var historyMails = this.state.history.map(function (value) {
+
 	            return _react3.default.createElement(
 	                _HistoryMail2.default,
-	                { author: value.author, recipients: value.recipients },
+	                {
+	                    key: key++,
+	                    author: value.author,
+	                    recipients: value.recipients },
 	                value.content
 	            );
 	        });
@@ -49976,7 +50081,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(228)(module)))
 
 /***/ },
-/* 508 */
+/* 509 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {'use strict';
@@ -50000,6 +50105,14 @@
 	var _reactTransformHmr3 = __webpack_require__(235);
 
 	var _reactTransformHmr4 = _interopRequireDefault(_reactTransformHmr3);
+
+	var _Constants = __webpack_require__(507);
+
+	var _Constants2 = _interopRequireDefault(_Constants);
+
+	var _MailHeader = __webpack_require__(506);
+
+	var _MailHeader2 = _interopRequireDefault(_MailHeader);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -50030,18 +50143,25 @@
 	var HistoryMail = _wrapComponent('_component')(_react3.default.createClass({
 	    displayName: 'HistoryMail',
 	    getInitialState: function getInitialState() {
-	        return {};
+	        return {
+	            author: _Constants2.default.EMPTY_AUTHOR,
+	            recipients: _Constants2.default.EMPTY_RECIPIENTS
+	        };
 	    },
-	    componentWillReceiveProps: function componentWillReceiveProps() {
-	        this.setState({});
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	        this.setState({
+	            author: nextProps.author || _Constants2.default.EMPTY_AUTHOR,
+	            recipients: nextProps.recipients || _Constants2.default.EMPTY_RECIPIENTS
+	        });
 	    },
 	    render: function render() {
 	        return _react3.default.createElement(
 	            'div',
 	            { className: 'history-mail-single' },
+	            _react3.default.createElement(_MailHeader2.default, { author: this.state.author, recipients: this.state.recipients }),
 	            _react3.default.createElement(
 	                'div',
-	                null,
+	                { className: 'history-mail-content' },
 	                this.props.children
 	            )
 	        );
@@ -50049,51 +50169,6 @@
 	}));
 	exports.default = HistoryMail;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(228)(module)))
-
-/***/ },
-/* 509 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var MAILS = [{
-	    author: {
-	        name: "some author with a weirdly long name that also doesn't fit into the title view",
-	        email: 'somereallylongemailaddress@somelongerdomain.reallylong.example.com'
-	    },
-	    title: "some title",
-	    content: "lorem ipsum dolor sit amet. consetetur sadipecing elitr.",
-	    date: Date.now(),
-	    id: 0,
-	    unread: true,
-	    recipients: ['node@radiatedpixel.com']
-	}, {
-	    author: {
-	        name: "noderich",
-	        email: 'noderich@gmail.com'
-	    },
-	    title: "some longer title that doesn't fit into the title view",
-	    content: "At vero eos et accusam et justo duo dolores et ea rebum. \n                Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. \n                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor \n                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam \n                et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem \n                ipsum dolor sit amet.\n                ",
-	    date: Date.now() - 60000,
-	    id: 1,
-	    recipients: ['gernot@raudner.at', 'some@dude.com']
-	}, {
-	    author: {
-	        name: "noderino",
-	        email: 'noderino@nodensens.com'
-	    },
-	    title: "some title 3",
-	    content: "Lorem s\xF6nderzeichen %\xDF \xB5 ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor \n                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo \n                duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit \n                amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor \n                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et \n                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor \n                sit amet.",
-	    date: Date.now() - 60000 * 60,
-	    unread: true,
-	    id: 2,
-	    recipients: ['node@radiatedpixel.com', 'tom@radiatedpixel.com', 'evabrucker@aon.at', 'someone@dudens.at', 'john@doe.com', 'somereallylongemailaddress@somelongerdomain.reallylong.example.com']
-	}];
-	var Constants = { MAILS: MAILS };
-	exports.default = Constants;
 
 /***/ },
 /* 510 */

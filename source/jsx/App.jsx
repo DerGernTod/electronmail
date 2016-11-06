@@ -30,15 +30,6 @@ var routes = (
                 <Route path="/settings/synchronization" component={Synchronization}/>
             </Route>
         </Route>
-        {/*<Route path="/admin" component={AdminContainer} onEnter={requireAuth}>
-            <Route path="/admin/tags" component={AdminTagsPage}>
-                <IndexRoute component={AdminTagsLatestPage} />
-                <Route path="/admin/tags/latest" component={AdminTagsLatestPage}/>
-                <Route path="/admin/tags/search/:keyword" component={AdminTagsSearchPage}/>
-            </Route>
-            <Route path="/admin/*" component={NotFoundPage}/>
-        </Route>*/
-        }
     </Router>
 );
 ReactDOM.render(routes,

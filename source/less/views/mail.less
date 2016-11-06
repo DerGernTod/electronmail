@@ -7,11 +7,38 @@
 @contentPaddingLeftRight: 50px;
 @contentPaddingTopBottom: 25px;
 .history-mail-single{
-    padding: 15px;
+    margin: 15px;
+    box-shadow: black 0 0 9px -5px;
     & > div {
-        padding: 5px;
+        padding: 15px 35px;
         background-color: @panelBackgroundColor;
     }
+
+    .mail-header{
+        padding-top: 10px;
+    }
+    .history-mail-content{
+        padding-top: 0;
+    }
+    &:nth-child(n+2){
+        .history-mail-content{
+            overflow: hidden;
+            padding-bottom: 0;
+            max-height: 0;
+            transition: max-height .8s cubic-bezier(0, 1, 0, 1) 4.9s, padding-bottom 1s ease 5s;
+        }
+        &:hover .history-mail-content{
+            max-height: 9999px;
+            padding-bottom: 15px;
+            transition: max-height .8s cubic-bezier(0.5, 0, 1, 0), padding-bottom 1s ease;
+
+        }
+
+    }
+    &:first-child{
+        margin-top: 30px;
+    }
+    
 }
 .contentpane-container{
     display: flex;
@@ -21,6 +48,10 @@
     position: absolute;
     //background-color: @textcolor;
     //color: @menuPaneBackground;
+    & > .mail-header{
+        border: 1px solid @textcolor;
+    }
+    overflow-y: auto;
 }
 .content-padding{
     padding-left: @contentPaddingLeftRight;
@@ -39,7 +70,6 @@
     }
     padding-top: 0;
     .content-padding;
-    border: 1px solid @textcolor;
     background-color: @panelBackgroundColor;
     a{
         text-decoration: none;

@@ -34,6 +34,7 @@
     "gulp-sourcemaps": "^2.2.0",
     "gulp-webpack": "^1.5.0",
     "moment": "^2.15.2",
+    "path": "^0.12.7",
     "react": "^15.3.2",
     "react-addons-css-transition-group": "^15.3.2",
     "react-dom": "^15.3.2",

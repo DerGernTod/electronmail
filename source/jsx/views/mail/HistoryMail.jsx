@@ -1,17 +1,24 @@
 import React from 'react';
+import Constants from '../../Constants.jsx';
+import MailHeader from './MailHeader.jsx';
 const HistoryMail = React.createClass({
     getInitialState(){
-        return {};
+        return {
+            author: Constants.EMPTY_AUTHOR,
+            recipients: Constants.EMPTY_RECIPIENTS
+        };
     },
-    componentWillReceiveProps(){
+    componentWillReceiveProps(nextProps){
         this.setState({
-
+            author : nextProps.author || Constants.EMPTY_AUTHOR,
+            recipients : nextProps.recipients || Constants.EMPTY_RECIPIENTS
         });
     },
     render(){
         return (
             <div className='history-mail-single'>
-                <div>
+                <MailHeader author={this.state.author} recipients={this.state.recipients} />
+                <div className='history-mail-content'>
                     {this.props.children}
                 </div>
             </div>
