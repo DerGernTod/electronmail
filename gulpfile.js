@@ -15,8 +15,8 @@ gulp.task('less', function(){
     return gulp.src(['source/less/**/*.less'])
         .pipe(less())
         .pipe(sourcemaps.init())
-        .pipe(minifyCSS())      
         .pipe(concat('style.css'))
+        .pipe(minifyCSS())      
         .pipe(sourcemaps.write())  
         .pipe(gulp.dest('dist/css'))
 });

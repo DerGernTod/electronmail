@@ -30,8 +30,7 @@ const MailHeader = React.createClass({
             <div className='mail-header'>
                 <h1>{this.state.title}</h1>
                 <div>
-                    <a href={mailLink} title={mailLink}>{this.state.author.name}</a>
-                    <span>to</span><span className='recipients'>{recipients}</span> 
+                    <a href={mailLink} title={mailLink}>{this.state.author.name}</a> to {recipients} 
                 </div>
             </div>
         );

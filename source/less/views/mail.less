@@ -1,49 +1,63 @@
 @import "../main";
 @mailPreviewWidth : 250px;
 @mailPreviewAuthorWidth: 117px;
-@contentPaneWidth : calc(~"100% - " @mailPreviewWidth);
+@contentPaneWidth : calc(~"100% - " (@mailPreviewWidth + @menuContainerWidth));
 @contentPaneBackground: rgb(37,37,38);
 @panelBackgroundColor: @textcolor + 10;
+@contentPaddingLeftRight: 50px;
+@contentPaddingTopBottom: 25px;
 .history-mail-single{
     padding: 15px;
     & > div {
+        padding: 5px;
         background-color: @panelBackgroundColor;
     }
 }
 .contentpane-container{
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: @contentPaneWidth;
+    height: 100%;
+    position: absolute;
     //background-color: @textcolor;
     //color: @menuPaneBackground;
 }
+.content-padding{
+    padding-left: @contentPaddingLeftRight;
+    padding-right: @contentPaddingLeftRight;
+    padding-bottom: @contentPaddingTopBottom;
+}
 .mail-content{
     background-color: @panelBackgroundColor;
+    .content-padding;
+    padding-top: @contentPaddingTopBottom;
 }
 .mail-header{
-    padding: 0 50px 25px;
+    h1{
+        font-size: 28pt;
+        margin-bottom: 10px;
+    }
+    padding-top: 0;
+    .content-padding;
     border: 1px solid @textcolor;
     background-color: @panelBackgroundColor;
     a{
         text-decoration: none;
+        color: inherit;
     }
     & > div {
-        display: flex;
-        flex-direction: row;
-        padding-right: 5px;
-        &::first-child a{
-            font-weight: bold;
-            color: @menuHighlight;
-        }
-        a::active, a::visited{
-            color: @menuPaneBackground;
-        }
-        & > .recipients > a{
-            &:nth-child(n+4){
-                display: none;
+        font-size: 10pt;
+        color: @contentPaneBackground + 100;
+        a{
+            &::visited{
+                color: @menuHighlight;
             }
-            &:nth-child(n+3)::after{
-                content: " more...";
+            &:first-child{
+                color: @menuHighlight !important;
+                font-weight: bold;
+                &::visited, &::hover{
+                    color: @menuHighlight !important;
+                }
             }
         }
     }
@@ -151,9 +165,4 @@
     max-width: 100%;
     background-color: @textcolor;
     color: @menuPaneBackground;
-    & > div{
-        position: absolute;
-        width: 100%;
-        height: 100%;
-    }
 }

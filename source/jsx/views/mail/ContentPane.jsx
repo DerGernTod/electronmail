@@ -3,19 +3,19 @@ import MailHeader from './MailHeader.jsx';
 import HistoryPane from './HistoryPane.jsx';
 import Constants from '../../Constants.jsx';
 const ContentPane = React.createClass({
-    componentDidMount : function(){
+    componentDidMount(){
         this.setState({
             mail : Constants.MAILS.find(function(entry){
                 return entry.id == Number(this.props.params.mailid);
             }.bind(this))
         });
     },
-    getInitialState : function(){
+    getInitialState(){
         return {
             mail : {}
         };
     },
-    render : function(){
+    render(){
         var mailId = this.props.params.mailid;
         var content = mailId || -1;
         var header = "Nothing to show";
@@ -27,6 +27,7 @@ const ContentPane = React.createClass({
                     author={this.state.mail.author} 
                     recipients={this.state.mail.recipients}
                     title={this.state.mail.title}/>;
+            content = this.state.mail.content;
         }
         
         return (

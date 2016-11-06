@@ -1,3 +1,14 @@
+const devtoolsInstaller = require('electron-devtools-installer');
+const REACT_DEVELOPER_TOOLS = devtoolsInstaller.REACT_DEVELOPER_TOOLS;
+const REDUX_DEVTOOLS = devtoolsInstaller.REDUX_DEVTOOLS;
+
+devtoolsInstaller.default(REACT_DEVELOPER_TOOLS)
+  .then((name) => console.log(`Added Extension: ${name}`))
+  .catch((err) => console.log(`An error occurred: ${err}`));
+  
+devtoolsInstaller.default(REDUX_DEVTOOLS)
+  .then((name) => console.log(`Added Extension: ${name}`))
+  .catch((err) => console.log(`An error occurred: ${err}`));
 const electron = require('electron')
 // Module to control application life.
 const app = electron.app

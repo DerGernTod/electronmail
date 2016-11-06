@@ -63,7 +63,7 @@
 /******/ 	}
 
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7fd25c12ceba9900d906"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7a4fa3e9ebb5fadf7ab3"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 
@@ -49739,7 +49739,6 @@
 
 	var ContentPane = _wrapComponent('_component')(_react3.default.createClass({
 	    displayName: 'ContentPane',
-
 	    componentDidMount: function componentDidMount() {
 	        this.setState({
 	            mail: _Constants2.default.MAILS.find(function (entry) {
@@ -49763,6 +49762,7 @@
 	                author: this.state.mail.author,
 	                recipients: this.state.mail.recipients,
 	                title: this.state.mail.title });
+	            content = this.state.mail.content;
 	        }
 
 	        return _react3.default.createElement(
@@ -49882,16 +49882,8 @@
 	                    { href: mailLink, title: mailLink },
 	                    this.state.author.name
 	                ),
-	                _react3.default.createElement(
-	                    'span',
-	                    null,
-	                    'to'
-	                ),
-	                _react3.default.createElement(
-	                    'span',
-	                    { className: 'recipients' },
-	                    recipients
-	                )
+	                ' to ',
+	                recipients
 	            )
 	        );
 	    }
@@ -49957,17 +49949,26 @@
 
 	var HistoryPane = _wrapComponent('_component')(_react3.default.createClass({
 	    displayName: 'HistoryPane',
-
+	    componentWillReceiveProps: function componentWillReceiveProps() {
+	        this.setState({
+	            history: this.props.history || []
+	        });
+	    },
+	    getInitialState: function getInitialState() {
+	        return { history: [] };
+	    },
 	    render: function render() {
+	        var historyMails = this.state.history.map(function (value) {
+	            return _react3.default.createElement(
+	                _HistoryMail2.default,
+	                { author: value.author, recipients: value.recipients },
+	                value.content
+	            );
+	        });
 	        return _react3.default.createElement(
 	            'div',
 	            null,
-	            _react3.default.createElement(
-	                'h2',
-	                null,
-	                'History pane!'
-	            ),
-	            _react3.default.createElement(_HistoryMail2.default, null)
+	            historyMails
 	        );
 	    }
 	}));
@@ -50028,7 +50029,12 @@
 
 	var HistoryMail = _wrapComponent('_component')(_react3.default.createClass({
 	    displayName: 'HistoryMail',
-
+	    getInitialState: function getInitialState() {
+	        return {};
+	    },
+	    componentWillReceiveProps: function componentWillReceiveProps() {
+	        this.setState({});
+	    },
 	    render: function render() {
 	        return _react3.default.createElement(
 	            'div',
@@ -50036,11 +50042,7 @@
 	            _react3.default.createElement(
 	                'div',
 	                null,
-	                _react3.default.createElement(
-	                    'h3',
-	                    null,
-	                    'one history mail'
-	                )
+	                this.props.children
 	            )
 	        );
 	    }

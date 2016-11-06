@@ -1,10 +1,18 @@
 import React from 'react';
 const HistoryMail = React.createClass({
-    render : function(){
+    getInitialState(){
+        return {};
+    },
+    componentWillReceiveProps(){
+        this.setState({
+
+        });
+    },
+    render(){
         return (
             <div className='history-mail-single'>
                 <div>
-                    <h3>one history mail</h3>
+                    {this.props.children}
                 </div>
             </div>
         );
