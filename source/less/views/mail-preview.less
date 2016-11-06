@@ -1,0 +1,118 @@
+@import "../main";
+@dateWidth: 90px;
+@pushWidth: 5px;
+@defaultPreviewAnchorPadding: 15px;
+@mailPreviewAuthorWidth: @mailPreviewWidth - @dateWidth - @defaultPreviewAnchorPadding * 2 - @pushWidth * 4;
+
+.mail-preview{
+    width: @mailPreviewWidth;
+    height: 100%;
+    background-color: @contentBackground;
+    .unread{
+        border-left: @menuHighlight 3px solid;
+    }
+    .author{
+        font-weight: bold;
+        font-size: 12pt;
+        float: left;
+        overflow: hidden;
+        height: 16pt;
+        width: @mailPreviewAuthorWidth;
+        white-space: nowrap;
+        line-height: 13pt;
+        margin-bottom: 5px;
+    }
+    .date{
+        color: @textcolor - 100;
+        width: @dateWidth;
+        font-size: 7pt;
+        text-align: right;
+        white-space: nowrap;
+        float: left;
+    }
+    .title{
+        clear: both;
+        white-space: nowrap;
+        overflow: hidden;
+        font-weight: bold;
+        font-size: 10pt;
+        line-height: 11pt;
+        padding: 4px 0;
+        margin-bottom: 5px;
+    }
+    .excerpt{
+        overflow: hidden;
+        font-size: 8pt;
+        width: @mailPreviewWidth - 40px;
+        color: rgb(100,100,100);
+    }
+    ol {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        li{
+            padding: 0;
+            margin: 0;
+            border-bottom: 1px solid @menuPaneBackground;
+            height: 120px;
+            overflow: hidden;
+            & > a{
+                height: 100%;
+                display: block;
+                padding: @defaultPreviewAnchorPadding;
+
+                background-color: @contentBackground;
+                transition: all .1s linear;
+                text-decoration: none;
+                color: @textcolor;
+                @keyframes popInPreview{
+                    0% { 
+                        padding-left: @defaultPreviewAnchorPadding + @pushWidth;
+                        padding-right: @defaultPreviewAnchorPadding - @pushWidth;
+                     }
+
+                    20% { 
+                        padding-left: @defaultPreviewAnchorPadding + @pushWidth * 4;
+                        padding-right:  @defaultPreviewAnchorPadding - @pushWidth * 4;
+                    }
+
+                    100% { 
+                        padding-left: @defaultPreviewAnchorPadding + @pushWidth;
+                        padding-right: @defaultPreviewAnchorPadding - @pushWidth;
+                    }
+
+                }
+                .textBlurMixin(@startColor, @endColor){
+                    background: linear-gradient(to right, @startColor 90%, @endColor 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+                & div:not(.date):not(.excerpt){
+                    .textBlurMixin(@textcolor, @contentBackground);
+                }
+                &.active, &.active:hover{
+                    background-color: @textcolor;
+                    animation: popInPreview 500ms ease-out;
+                    color: @menuPaneBackground;
+                    padding-left: @defaultPreviewAnchorPadding + @pushWidth;
+
+                    & div:not(.date):not(.excerpt) {
+                        .textBlurMixin(@menuPaneBackground, @textcolor);
+                    }
+                }
+                &:hover{
+                    @hoverBackground: @menuPaneBackground + 10;
+                    @hoverColor: @textcolor + 10;
+                    background-color: @hoverBackground;
+                    color: @hoverColor;
+                    padding-left: @defaultPreviewAnchorPadding + @pushWidth;
+
+                    & div:not(.date):not(.excerpt) {
+                        .textBlurMixin(@hoverColor, @hoverBackground);
+                    }
+                }
+            } 
+        }
+    }
+
+}

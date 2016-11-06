@@ -23,29 +23,20 @@ const ContentPane = React.createClass({
         };
     },
     render(){
-        var mailId = this.props.params.mailid;
-        var content = mailId || -1;
-        var header = "Nothing to show";
-        var history = [];
-        if(!mailId){
-            content = "select a mail to view!";
+        if(!this.props.params.mailid){
+            return <div className='contentpane-container'></div>;
         }else{
-            header = 
-                <MailHeader 
+            return (
+                <div className='contentpane-container'>
+                    <MailHeader 
                     author={this.state.mail.author} 
                     recipients={this.state.mail.recipients}
-                    title={this.state.mail.title}/>;
-            content = this.state.mail.content;
-            history = this.state.mail.history;
+                    title={this.state.mail.title}/>
+                    <div className='mail-content'>{this.state.mail.content}</div>
+                    <HistoryPane history={this.state.mail.history} />
+                </div>
+            );
         }
-        
-        return (
-            <div className='contentpane-container'>
-                {header}
-                <div className='mail-content'>{content}</div>
-                <HistoryPane history={history} />
-            </div>
-        );
     }
 });
 export default ContentPane;

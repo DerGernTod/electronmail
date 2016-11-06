@@ -17,6 +17,7 @@ const MailHeader = React.createClass({
     },
     render() {
         var counter = 0;
+        //TODO: only show 1 recipient and show "and # others" with an expandable(?) or title
         var recipients = this.state.recipients.map(function(val){
             var prepend = '';
             if(counter != 0){
@@ -24,7 +25,7 @@ const MailHeader = React.createClass({
             }
             counter++;
             var mailtoLink = 'mailto:' + val;
-            return <a key={val} href={mailtoLink}>{prepend}{val}</a>;
+            return <a key={val} href={mailtoLink} className='recipient'>{prepend}{val}</a>;
         });
         var mailLink = `mailto:${this.state.author.email}`;
         var title = '';
@@ -35,7 +36,7 @@ const MailHeader = React.createClass({
             <div className='mail-header'>
                 {title}
                 <div>
-                    <a href={mailLink} title={mailLink}>{this.state.author.name}</a> to {recipients} 
+                    <a href={mailLink} title={mailLink}>{this.state.author.name}</a> to {recipients}
                 </div>
             </div>
         );
