@@ -7,7 +7,9 @@ const webpack = require('gulp-webpack');
 
 gulp.task('scripts', function(){
     return gulp.src(['source/jsx/App.jsx'])
+        .pipe(sourcemaps.init())
         .pipe(webpack(require('./webpack.config.js')))
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest('dist/js'));
 });
 gulp.task('less', function(){

@@ -4,6 +4,8 @@
 @menuHighlight: rgb(59,89,62);
 @menuPaneBackground: rgb(45,49,50);
 
+@scrollbarWidth: 12px;
+
 @menuContainerWidth: 160px;
 @mailPreviewWidth : 300px;
 
@@ -13,6 +15,14 @@
     0% { padding-left: 35px; }
     20% { padding-left: 50px; }
     100% { padding-left: 35px; }
+}
+
+::-webkit-scrollbar {
+    width: @scrollbarWidth;
+} 
+ 
+::-webkit-scrollbar-thumb {
+    background-color: @contentBackground;
 }
 
 .contentcontainer{

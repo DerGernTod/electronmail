@@ -117,5 +117,6 @@ const MAILS = [
                 ]
             }
         ];
-const Constants = { MAILS, EMPTY_AUTHOR, EMPTY_RECIPIENTS, EMPTY_TITLE };
+const SHOWN_RECIPIENTS = 3;
+const Constants = { MAILS, EMPTY_AUTHOR, EMPTY_RECIPIENTS, EMPTY_TITLE, SHOWN_RECIPIENTS };
 export default Constants;

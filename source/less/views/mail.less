@@ -3,19 +3,20 @@
 @contentPaneBackground: rgb(37,37,38);
 @contentPaddingLeftRight: 50px;
 @contentPaddingTopBottom: 25px;
-
+@headerSubColor: @contentPaneBackground + 100;
 .contentpane-container{
     display: flex;
     flex-direction: column;
     width: @contentPaneWidth;
     height: 100%;
     position: absolute;
+    padding-left: @scrollbarWidth;
     //background-color: @textcolor;
     //color: @menuPaneBackground;
     & > .mail-header{
-        border: 1px solid @textcolor;
+        border-bottom: 1px solid @textcolor;
     }
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 .content-padding{
     padding-left: @contentPaddingLeftRight;
@@ -41,7 +42,7 @@
     }
     & > div {
         font-size: 10pt;
-        color: @contentPaneBackground + 100;
+        color: @headerSubColor;
         a{
             &::visited{
                 color: @menuHighlight;
@@ -53,6 +54,28 @@
                     color: @menuHighlight !important;
                 }
             }
+        }
+    }
+    
+    .others:hover .hiddenRecipients{
+        max-height: 9999px;
+
+        padding-bottom: 1px;
+        transition: max-height .8s cubic-bezier(0.5, 0, 1, 0), padding-bottom 1s ease;
+    }
+    .others{
+        span {
+            font-weight: 600;
+        }
+        .hiddenRecipients{
+            .recipient{
+                color: @headerSubColor !important;
+                font-weight: inherit;
+            }
+            overflow: hidden;
+            padding-bottom: 0;
+            max-height: 0;
+            transition: max-height .8s cubic-bezier(0, 1, 0, 1) 4.9s, padding-bottom 1s ease 5s;
         }
     }
 }
