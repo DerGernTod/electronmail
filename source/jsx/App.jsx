@@ -11,6 +11,8 @@ import Synchronization from './views/settings/Synchronization.jsx';
 import Mail from './views/mail/Mail.jsx';
 import ContentPane from './views/mail/ContentPane.jsx';
 import Attachments from './views/attachments/Attachments.jsx';
+import AccountTabList from './views/settings/account-components/AccountTabList.jsx';
+import AccountTab from './views/settings/account-components/AccountTab.jsx';
 var routes = (
     <Router history={hashHistory}>
         <Route path="/" component={Main}>
@@ -24,7 +26,10 @@ var routes = (
                 <Route path="/attachments/collection" component={Attachments} />
             </Route>
             <Route path="/settings" component={Settings}>
-                <Route path="/settings/accounts" component={Accounts}/>
+                <Route path="/settings/accounts" component={AccountTabList}>
+                    <IndexRoute component={AccountTab} />
+                    <Route path="/settings/accounts/:account" component={AccountTab}/>
+                </Route>
                 <Route path="/settings/calendar" component={Calendar}/>
                 <Route path="/settings/profile" component={Profile}/>
                 <Route path="/settings/synchronization" component={Synchronization}/>

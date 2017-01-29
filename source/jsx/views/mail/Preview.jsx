@@ -2,15 +2,15 @@ import React from 'react';
 import {Link} from 'react-router';
 import moment from 'moment';
 const Preview = React.createClass({
-    getInitialState : function(){
+    getInitialState(){
         return { mails : []}
     },
-    componentDidMount : function(){
+    componentDidMount(){
         this.setState({
             mails : this.props.mails
         });
     },
-    buildMailPreview : function(mail){
+    buildMailPreview(mail){
         var linkTarget = "mail/" + this.props.accounts + "/" + this.props.folder + "/" + mail.id
         var content = mail.content;
         content = content.length > 80 ? `${content.substr(0, 77)}...` : content;
@@ -25,7 +25,7 @@ const Preview = React.createClass({
             </li>
         );
     },
-    render : function(){
+    render(){
         var mailList = [];
         this.state.mails.forEach(function(mail){
             mailList.push(this.buildMailPreview(mail));
@@ -36,7 +36,7 @@ const Preview = React.createClass({
                     {mailList}
                 </ol>
             </div>
-        )
+        );
     }
 });
 export default Preview;

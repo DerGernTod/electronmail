@@ -4,7 +4,21 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 const Main = React.createClass({
     render : function(){
         var locations = location.hash.split("/");
-        var mainKey = locations[0] + "/" + locations[1] + "/" + (locations[2] || "") + "/" + (locations[3] || "");
+        var mainKey = locations[0] + locations[1]; //0 is always '#'
+        switch (mainKey) {
+            case '#mail':
+                mainKey += "/" + locations[1] + "/" + (locations[2] || "") + "/" + (locations[3] || "");
+                break;
+            case '#attachments':
+                mainKey += "/" + locations[1] + "/" + (locations[2] || "") + "/" + (locations[3] || "")
+                break;
+            case '#settings':
+                //just switch if switch from /settings/account to /settings/calendar or similar
+                mainKey += "/" + locations[1] + "/" + locations[2];
+                break;
+            default:
+                break;
+        }
         console.log("mainKey: ", mainKey);
         return (
             <div>
