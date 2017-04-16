@@ -28,6 +28,13 @@ var config = {
       test: /\.jsx?/,
       include: PATHS.app,
       use: ['babel-loader']
+    },
+    {
+      test: /\.(ttf|eot|woff|woff2|svg)$/,
+      loader: 'file-loader',
+      options: {
+        name: 'fonts/[name].[ext]',
+      },
     }
     ]
   },
