@@ -1,0 +1,35 @@
+@textcolor: rgb(226,227,228);
+@panelBackgroundColor: @textcolor + 10;
+@contentBackground: rgb(42,42,42);
+@menuHighlight: rgb(59,89,62);
+@menuPaneBackground: rgb(45,49,50);
+
+@scrollbarWidth: 12px;
+
+@menuContainerWidth: 160px;
+@mailPreviewWidth : 300px;
+
+@contentPaneWidth : calc(~"100% - " (@mailPreviewWidth + @menuContainerWidth));
+
+@keyframes popInMainMenu{
+    0% { padding-left: 35px; }
+    20% { padding-left: 50px; }
+    100% { padding-left: 35px; }
+}
+
+@contentPaneBackground: rgb(37,37,38);
+@contentPaddingLeftRight: 50px;
+@contentPaddingTopBottom: 25px;
+@headerSubColor: @contentPaneBackground + 100;
+
+@dateWidth: 90px;
+@pushWidth: 5px;
+@defaultPreviewAnchorPadding: 15px;
+@mailPreviewAuthorWidth: @mailPreviewWidth - @dateWidth - @defaultPreviewAnchorPadding * 2 - @pushWidth * 4;
+
+
+@fadeOutTime: 200ms;
+@fadeInTime: 360ms;
+@fadeFromLeftStart: @menuContainerWidth;
+@fadeFromLeftEnd: calc(@menuContainerWidth + 50px);
+@transitionDelay: 100ms;

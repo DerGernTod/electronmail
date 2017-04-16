@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-import {Route, IndexRoute, Link, hashHistory, Router} from 'react-router';
+import { Route, IndexRoute, Link, hashHistory, Router } from 'react-router';
 import Main from './Main.jsx';
 import Test from './Test.jsx';
 import Settings from './views/settings/Settings.jsx';
@@ -16,23 +16,23 @@ import AccountTab from './views/settings/account-components/AccountTab.jsx';
 var routes = (
     <Router history={hashHistory}>
         <Route path="/" component={Main}>
-            <IndexRoute component={Test}/>
+            <IndexRoute component={Test} />
             <Route path="/mail/:accounts/:folder" component={Mail}>
-                <IndexRoute component={ContentPane}/>
+                <IndexRoute component={ContentPane} />
                 <Route path="/mail/:accounts/:folder/:mailid" component={ContentPane} />
             </Route>
             <Route path="/attachments" component={Test}>
-                <IndexRoute component={Attachments}/>
+                <IndexRoute component={Attachments} />
                 <Route path="/attachments/collection" component={Attachments} />
             </Route>
             <Route path="/settings" component={Settings}>
                 <Route path="/settings/accounts" component={AccountTabList}>
                     <IndexRoute component={AccountTab} />
-                    <Route path="/settings/accounts/:account" component={AccountTab}/>
+                    <Route path="/settings/accounts/:account" component={AccountTab} />
                 </Route>
-                <Route path="/settings/calendar" component={Calendar}/>
-                <Route path="/settings/profile" component={Profile}/>
-                <Route path="/settings/synchronization" component={Synchronization}/>
+                <Route path="/settings/calendar" component={Calendar} />
+                <Route path="/settings/profile" component={Profile} />
+                <Route path="/settings/synchronization" component={Synchronization} />
             </Route>
         </Route>
     </Router>

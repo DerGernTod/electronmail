@@ -1,3 +1,4 @@
+import './settings-accounts.less';
 import React from 'react';
 const Settings = React.createClass({
     render : function(){

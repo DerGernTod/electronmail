@@ -1,3 +1,5 @@
+import '../content-pane-fade.less';
+import '../mail-preview.less';
 import React from 'react';
 import MailHeader from './MailHeader.jsx';
 import HistoryPane from './HistoryPane.jsx';

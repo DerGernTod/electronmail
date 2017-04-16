@@ -1,11 +1,11 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
 const PATHS = {
   build: path.resolve(__dirname, 'build'),
   app: path.resolve(__dirname, 'source/jsx')
 };
+
 
 
 var config = {
@@ -19,11 +19,17 @@ var config = {
     new webpack.SourceMapDevToolPlugin()
   ],
   module: {
-    loaders: [{
+    rules: [{
+      test: /\.(le|c)ss$/,
+      include: PATHS.app,
+      use: ['style-loader', 'css-loader', 'less-loader']
+    },
+    {
       test: /\.jsx?/,
       include: PATHS.app,
-      loader: 'babel-loader'
-    }]
+      use: ['babel-loader']
+    }
+    ]
   },
   output: {
     path: PATHS.build,
