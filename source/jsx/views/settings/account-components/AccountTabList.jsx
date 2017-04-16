@@ -33,7 +33,7 @@ const AccountTabList = React.createClass({
         }.bind(this));
         var mainKey = this.props.params.account || -1;
         return (
-            <div className={this.props.className}>
+            <div className='account-tab-list'>
                 <ol>
                     {accountsList}
                 </ol>

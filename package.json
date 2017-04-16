@@ -4,6 +4,7 @@
     "description": "An Electron mail application",
     "main": "main.js",
     "scripts": {
+        "dev": "node gulpfile.js",
         "start": "electron ."
     },
     "repository": "https://github.com/dergerntod/electronmail",
