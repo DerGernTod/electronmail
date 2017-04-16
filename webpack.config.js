@@ -1,27 +1,40 @@
 const webpack = require('webpack');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-var BUILD_DIR = path.resolve(__dirname, 'dist/js');
-var APP_DIR = path.resolve(__dirname, 'source/jsx');
-
-var config = {
-    entry: APP_DIR + '/App.jsx',
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin(),
-        new webpack.SourceMapDevToolPlugin()
-    ],
-    module: {
-        loaders: [{
-            test: /\.jsx?/,
-            include: APP_DIR,
-            loader: 'babel'
-        }]
-    },
-    output: {
-        path: BUILD_DIR,
-        filename: 'bundle.js'
-    }
+const PATHS = {
+  build: path.resolve(__dirname, 'build'),
+  app: path.resolve(__dirname, 'source/jsx')
 };
 
-module.exports = config;
+
+var config = {
+  entry: PATHS.app + '/App.jsx',
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Electronmail',
+      template: 'webpack-index.html'
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.SourceMapDevToolPlugin()
+  ],
+  module: {
+    loaders: [{
+      test: /\.jsx?/,
+      include: PATHS.app,
+      loader: 'babel-loader'
+    }]
+  },
+  output: {
+    path: PATHS.build,
+    filename: '[name].js'
+  }
+};
+
+module.exports = (env) => {
+  var cfg = config;
+  if (env == 'development') {
+    cfg.plugins.push(new webpack.SourceMapDevToolPlugin());
+  }
+  return cfg;
+};
