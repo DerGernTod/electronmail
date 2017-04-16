@@ -1,4 +1,4 @@
 node_modules
 dist
-/build
+build
 npm-debug.log
