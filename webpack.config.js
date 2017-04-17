@@ -16,7 +16,8 @@ var config = {
       template: 'webpack-index.html'
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.SourceMapDevToolPlugin()
+    new webpack.SourceMapDevToolPlugin(),
+    new webpack.IgnorePlugin(/vertx/)
   ],
   module: {
     rules: [{
@@ -41,7 +42,8 @@ var config = {
   output: {
     path: PATHS.build,
     filename: '[name].js'
-  }
+  },
+  target: 'electron-main'
 };
 
 module.exports = (env) => {
