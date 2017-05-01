@@ -6,7 +6,6 @@
   "scripts": {
     "build": "webpack --env production",
     "webdev": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development\"",
-    "dev": "node gulpfile.js",
     "start": "electron .",
     "lint:js": "eslint ."
   },

@@ -79,16 +79,20 @@ function init() {
       console.warn('Reverting password changes because an error occurred', err);
       return Promise
       .all([
-        //TODO: this doesn't work yet, since unlink doesn't really delete the files
-        //and there's no possibility to make sure we should take the backup file or just use
-        //the current store. need to make something like "commit stages" of pw change events
-        //nevertheless, encrypted store works
         revertPasswordChange('contacts', oldPass),
         revertPasswordChange('mails', oldPass),
         revertPasswordChange('calendars', oldPass)])
       .then(err => Promise.reject(err));
     })
-    .then(() => update(databases.user, {}, { $set: { dbpass: newPass }}));
+    .then(() => update(databases.user, {}, { $set: { dbpass: newPass }}))
+    .then(() => Promise.all([
+      file.remove('data/calendars_new.db'),
+      file.remove('data/calendars.db_'),
+      file.remove('data/contacts_new.db'),
+      file.remove('data/contacts.db_'),
+      file.remove('data/mails_new.db'),
+      file.remove('data/mails.db_')
+    ]));
   });
 }
 
@@ -98,6 +102,7 @@ function revertPasswordChange(db, oldPass) {
   let dbBackupPath = `data/${db}.db_`;
   let dbNewPath = `data/${db}_new.db`;
   return file.exists(dbBackupPath).then(exists => {
+    console.log('File exists result: ', exists);
     if (exists) {
       return file.remove(dbPath)
       .then(() => file.copy(dbBackupPath, dbPath))

@@ -11,7 +11,7 @@ function exists(file) {
           reject(err);
         }
       } else {
-        resolve(true);
+        resolve(stat);
       }
     });
   });
