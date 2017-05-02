@@ -1,0 +1,54 @@
+@import "../../../constants.less";
+.account-tab-list{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  ol {
+    width: 300px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      display: block;
+      padding: 0;
+      margin: 0;
+      border-bottom: 1px solid @menuPaneBackground;
+      overflow: hidden;
+      & > a {
+        display: block;
+        color: inherit;
+        padding: 15px;
+        text-decoration: none;
+        width: 100%;
+        height: 100%;
+        transition: all .1s linear; 
+        
+        background-color: @contentBackground;
+        
+        &.active, &.active:hover{
+            background-color: @textcolor;
+            animation: popInPreview 500ms ease-out;
+            color: @menuPaneBackground;
+            padding-left: @defaultPreviewAnchorPadding + @pushWidth;
+        }
+        &:hover{
+            @hoverBackground: @menuPaneBackground + 10;
+            @hoverColor: @textcolor + 10;
+            background-color: @hoverBackground;
+            color: @hoverColor;
+            padding-left: @defaultPreviewAnchorPadding + @pushWidth;
+        }
+      }
+    }
+  }
+}
+.accounts{
+  .settings-height-mixin();
+  .contentpane-container{
+    .settings-height-mixin();    
+  }
+}
+
+.settings-height-mixin(){
+  height: ~'calc(100% - 9.5rem)';
+}

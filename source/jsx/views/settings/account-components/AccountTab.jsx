@@ -45,7 +45,7 @@ const AccountTab = React.createClass({
     var accountId = this.props.params && this.props.params.account || -1;
     var data = this.state.data || 'no data yet';
     return (
-      <div>
+      <div className='contentpane-container settings-height'>
           This is an account tab for {accountId}
           <div>Connected: {JSON.stringify(this.state.connected)}</div>    
           <div>Data: {JSON.stringify(data)}</div>

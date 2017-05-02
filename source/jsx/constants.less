@@ -34,3 +34,22 @@
 @fadeFromLeftStart: @menuContainerWidth;
 @fadeFromLeftEnd: calc(@menuContainerWidth + 50px);
 @transitionDelay: 100ms;
+
+
+@keyframes popInPreview{
+    0% { 
+        padding-left: @defaultPreviewAnchorPadding + @pushWidth;
+        padding-right: @defaultPreviewAnchorPadding - @pushWidth;
+        }
+
+    20% { 
+        padding-left: @defaultPreviewAnchorPadding + @pushWidth * 4;
+        padding-right:  @defaultPreviewAnchorPadding - @pushWidth * 4;
+    }
+
+    100% { 
+        padding-left: @defaultPreviewAnchorPadding + @pushWidth;
+        padding-right: @defaultPreviewAnchorPadding - @pushWidth;
+    }
+
+}

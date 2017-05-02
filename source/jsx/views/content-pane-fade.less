@@ -1,32 +1,32 @@
 @import "../constants.less";
 @import "./mail/mail.less";
-@fadeOutTime: 200ms;
-@fadeInTime: 360ms;
-@fadeFromLeftStart: calc(@mailPreviewWidth);
-@fadeFromLeftEnd: calc(@mailPreviewWidth + 50px);
-@transitionDelay: 100ms;
+@fadeOutTimeContentPane: 200ms;
+@fadeInTimeContentPane: 360ms;
+@fadeFromLeftStartContentPane: calc(@mailPreviewWidth);
+@fadeFromLeftEndContentPane: calc(@mailPreviewWidth + 50px);
+@transitionDelayContentPane: 100ms;
 .content-pane-fade-enter, .content-pane-fade-appear {
   opacity: 0.01;
-  left: @fadeFromLeftEnd;
+  left: @fadeFromLeftEndContentPane;
 }
 
 .content-pane-fade-enter.content-pane-fade-enter-active, .content-pane-fade-appear.content-pane-fade-appear-active {
   opacity: 1;
-  left: @fadeFromLeftStart;
+  left: @fadeFromLeftStartContentPane;
   transition: 
-    opacity @fadeInTime ease-in @transitionDelay, 
-    left @fadeInTime cubic-bezier(0.1, 0.2, 0.3, 1.0) @transitionDelay;
+    opacity @fadeInTimeContentPane ease-in @transitionDelayContentPane, 
+    left @fadeInTimeContentPane cubic-bezier(0.1, 0.2, 0.3, 1.0) @transitionDelayContentPane;
 }
 
 .content-pane-fade-leave {
   opacity: 1;
-  left: @fadeFromLeftStart;
+  left: @fadeFromLeftStartContentPane;
 }
 
 .content-pane-fade-leave.content-pane-fade-leave-active {
   opacity: 0.01;
-  left: @fadeFromLeftEnd;
+  left: @fadeFromLeftEndContentPane;
   transition: 
-    opacity @fadeOutTime ease-in @transitionDelay, 
-    left @fadeOutTime ease-in @transitionDelay;
+    opacity @fadeOutTimeContentPane ease-in @transitionDelayContentPane, 
+    left @fadeOutTimeContentPane ease-in @transitionDelayContentPane;
 }

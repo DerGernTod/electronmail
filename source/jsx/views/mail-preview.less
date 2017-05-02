@@ -49,8 +49,8 @@
         li{
             padding: 0;
             margin: 0;
-            border-bottom: 1px solid @menuPaneBackground;
             height: 120px;
+            border-bottom: 1px solid @menuPaneBackground;
             overflow: hidden;
             & > a{
                 height: 100%;
@@ -61,23 +61,6 @@
                 transition: all .1s linear;
                 text-decoration: none;
                 color: @textcolor;
-                @keyframes popInPreview{
-                    0% { 
-                        padding-left: @defaultPreviewAnchorPadding + @pushWidth;
-                        padding-right: @defaultPreviewAnchorPadding - @pushWidth;
-                     }
-
-                    20% { 
-                        padding-left: @defaultPreviewAnchorPadding + @pushWidth * 4;
-                        padding-right:  @defaultPreviewAnchorPadding - @pushWidth * 4;
-                    }
-
-                    100% { 
-                        padding-left: @defaultPreviewAnchorPadding + @pushWidth;
-                        padding-right: @defaultPreviewAnchorPadding - @pushWidth;
-                    }
-
-                }
                 .textBlurMixin(@startColor, @endColor){
                     background: linear-gradient(to right, @startColor 90%, @endColor 100%);
                     -webkit-background-clip: text;
