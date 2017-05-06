@@ -1,10 +1,9 @@
 import '../../content-pane-fade.less';
 import './accounts.less';
 import React from 'react';
-import Constants from '../../../Constants.jsx';
 import {hashHistory, Link} from 'react-router';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-
+import {findAllAccounts} from '../../../service/accounts';
 const AccountTabList = React.createClass({
   propTypes: {
     children: React.PropTypes.element.isRequired,
@@ -19,15 +18,13 @@ const AccountTabList = React.createClass({
     };
   },
   getInitialState(){
-    return { accounts : Constants.ACCOUNTS };
+    return { accounts : [] };
   },
   componentDidMount(){
     if (isNaN(this.props.params.account)) {
       hashHistory.push('settings/accounts/-1');
     }
-    this.setState({
-      accounts : Constants.ACCOUNTS
-    });
+    findAllAccounts().then(accounts => this.setState({ accounts }));
   },
   buildAccountPreview(account){
     var linkTarget = 'settings/accounts/' + account.id;
@@ -36,14 +33,14 @@ const AccountTabList = React.createClass({
       <li key={account.id}>
         <Link to={linkTarget} activeClassName="active">
           <div className='author'>{account.name}</div>
-          <div className='title'>{account.address}</div>
+          {account.address ? (<div className='title'>{account.address}</div>) : null}
         </Link>
       </li>
     );
   },
   render(){
     var accountsList = [];
-    accountsList.push(this.buildAccountPreview({id: -1, name: 'New Account', address: 'new@accou.nt'}));
+    accountsList.push(this.buildAccountPreview({id: -1, name: 'Create account'}));
     this.state.accounts.forEach(mail => accountsList.push(this.buildAccountPreview(mail)));
     var mainKey = this.props.params.account;
     return (
