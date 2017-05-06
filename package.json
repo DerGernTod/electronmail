@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "build": "webpack --env production",
-    "webdev": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development\"",
+    "webpack:dev": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development\"",
+    "electron:dev" : "electron . dev",
     "start": "electron .",
     "lint:js": "eslint ."
   },

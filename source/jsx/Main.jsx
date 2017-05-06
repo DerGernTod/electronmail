@@ -3,9 +3,20 @@ import './content-fade.less';
 import React from 'react';
 import {Link} from 'react-router';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import {get} from './service/nedb';
+//import {get} from './service/nedb';
 
 const Main = React.createClass({
+  propTypes: {
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.node),
+      React.PropTypes.node
+    ]).isRequired
+  },
+  getDefaultProps: function() {
+    return {
+      children: []
+    };
+  },
   render : function(){
     var locations = location.hash.split('/');
     var mainKey = locations[0] + locations[1]; //0 is always '#'
@@ -23,7 +34,7 @@ const Main = React.createClass({
     default:
       break;
     }
-    console.log('mainKey: ', mainKey);
+    console.log('key: ' + location.hash);
     return (
             <div>
                 <div className="menucontainer float-left">
