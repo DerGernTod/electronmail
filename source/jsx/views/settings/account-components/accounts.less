@@ -3,8 +3,13 @@
   height: 100%;
   margin: 0;
   padding: 0;
+  &::-webkit-scrollbar {
+    background-color: @textcolor;
+  }
+  overflow-y: scroll;
+  flex-basis: 300px;
   ol {
-    width: 300px;
+    width: 100%;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -43,6 +48,8 @@
   }
 }
 .accounts{
+  display: flex;
+  flex-direction: row;
   .settings-height-mixin();
   .contentpane-container{
     .settings-height-mixin();    

@@ -31,7 +31,7 @@ const AccountTabList = React.createClass({
     var linkTarget = `${Constants.ROUTES.accounts}/${account.id}`;
         
     return (
-      <li key={account.id}>
+      <li key={account.id} id={`accounts-list-id-${account.id}`}>
         <Link to={linkTarget} activeClassName="active">
           <div className='author'>{account.name}</div>
           {account.address ? (<div className='title'>{account.address}</div>) : null}
@@ -39,11 +39,16 @@ const AccountTabList = React.createClass({
       </li>
     );
   },
-  updateAccountList() {
-    findAllAccounts().then(accounts => this.setState({ accounts }));
+  updateAccountList(scrollToId) {
+    findAllAccounts()
+    .then(accounts => this.setState({ accounts: accounts.sort((a, b) => {
+      return a.name.localeCompare(b.name);
+    })}))
+    .then(() => document.getElementById(`accounts-list-id-${scrollToId}`).scrollIntoViewIfNeeded());
   },
-  onAccountCreated() {
-    this.updateAccountList();
+  onAccountCreated(accountId) {
+    this.updateAccountList(accountId);
+    //scroll to accountId
   },
   render(){
     var accountsList = [];

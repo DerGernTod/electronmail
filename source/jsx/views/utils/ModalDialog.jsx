@@ -21,6 +21,8 @@ const ModalDialog = React.createClass({
     return { enabled: false };
   },
   handle(accepted, evt) {
+    //stop propagation so that abort is not called additionally if accept is clicked
+    //this makes it possible to click anywhere to abort
     evt.stopPropagation();
     if (accepted) {
       this.props.onAccept();
