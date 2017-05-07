@@ -1,12 +1,16 @@
-import { findAccounts } from './nedb';
-
+import { find, getDb, insert } from './nedb';
+let db = getDb('accounts');
 function findAccount(id) {
-  return findAccounts({id});
+  return find(db, {id});
 }
 
 function findAllAccounts() {
-  return findAccounts();
+  return find(db);
+}
+
+function addAccount(account) {
+  return insert(db, account).then(account => account.id);
 }
 
 export default findAccount;
-export {findAllAccounts};
+export { findAllAccounts, findAccount, addAccount };

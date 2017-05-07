@@ -16,7 +16,10 @@ var config = {
       template: 'webpack-index.html'
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.SourceMapDevToolPlugin(),
+    new webpack.SourceMapDevToolPlugin({
+      include: PATHS.app,
+      filename: '[file].map'
+    }),
     new webpack.IgnorePlugin(/vertx/)
   ],
   module: {

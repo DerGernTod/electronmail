@@ -9,6 +9,43 @@
     background-color: @contentBackground;
 }
 
+.modal-dialog{
+    &.enabled {
+        opacity: 1;
+        background-color: rgba(0,0,0,.5);
+        visibility: visible;
+        transition: visibility 0s linear, background-color .2s linear, opacity .1s linear;
+    }
+    transition: visibility 0s linear .1s, background-color .2s linear, opacity .1s linear;
+    background-color: rgba(0,0,0,0);
+    visibility: hidden;
+    opacity: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+    .modal-item{
+        background-color: @contentBackground;
+        color: @textcolor;
+        max-width: 50%;
+        border-radius: 2px;
+        padding: 0 15px 15px;
+        div {
+            margin: 5px 0;
+        }
+    }
+    .modal-item-top{
+        align-self: flex-start;
+    }
+    .modal-item-bottom {
+        align-self: flex-end;
+    }
+}
+
 .contentcontainer{
     background-color: @contentBackground;
     width: calc(~"100% - " @menuContainerWidth);

@@ -4,6 +4,7 @@ import React from 'react';
 import {hashHistory, Link} from 'react-router';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {findAllAccounts} from '../../../service/accounts';
+import Constants from '../../../constants';
 const AccountTabList = React.createClass({
   propTypes: {
     children: React.PropTypes.element.isRequired,
@@ -22,12 +23,12 @@ const AccountTabList = React.createClass({
   },
   componentDidMount(){
     if (isNaN(this.props.params.account)) {
-      hashHistory.push('settings/accounts/-1');
+      hashHistory.push(`${Constants.ROUTES.accounts}/-1`);
     }
-    findAllAccounts().then(accounts => this.setState({ accounts }));
+    this.updateAccountList();
   },
   buildAccountPreview(account){
-    var linkTarget = 'settings/accounts/' + account.id;
+    var linkTarget = `${Constants.ROUTES.accounts}/${account.id}`;
         
     return (
       <li key={account.id}>
@@ -37,6 +38,12 @@ const AccountTabList = React.createClass({
         </Link>
       </li>
     );
+  },
+  updateAccountList() {
+    findAllAccounts().then(accounts => this.setState({ accounts }));
+  },
+  onAccountCreated() {
+    this.updateAccountList();
   },
   render(){
     var accountsList = [];
@@ -59,7 +66,8 @@ const AccountTabList = React.createClass({
           transitionAppear={true}
           transitionAppearTimeout={500}>
           {React.cloneElement(this.props.children, {
-            key: mainKey
+            key: mainKey,
+            onAccountCreated: this.onAccountCreated
           })}
         </ReactCSSTransitionGroup>
       </div>

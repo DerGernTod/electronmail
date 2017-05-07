@@ -195,7 +195,7 @@ function insert(db, args) {
 function find(db, args) {
   console.log('find db entries', args, db);
   return new Promise((resolve, reject) => {
-    db.find(args, (err, docs) => {
+    db.find(args || {}, (err, docs) => {
       console.log('received', err, docs);
       if (err) {
         reject(err);
@@ -218,6 +218,9 @@ function update(db, query, update, settings) {
     });
   });
 }
+function getDb(dbName) {
+  return databases[dbName];
+}
 
 function get(something, db) {
   db.find(something);
@@ -227,8 +230,5 @@ function findMails(args) {
   return find(databases.mails, args || {});
 }
 
-function findAccounts(args) {
-  return find(databases.accounts, args || {});
-}
 
-export {get, insert, find, findMails, findAccounts };
+export { get, insert, find, findMails, getDb, update };

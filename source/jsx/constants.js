@@ -5,6 +5,9 @@ const EMPTY_AUTHOR = {
 const EMPTY_RECIPIENTS = [
   'no@one.other.com'
 ];
+const ROUTES = {
+  accounts: '/settings/accounts'
+};
 const EMPTY_TITLE = 'some_empty_title_identifier';
 const ACCOUNTS = [
   {
@@ -125,5 +128,5 @@ const MAILS = [
   }
 ];
 const SHOWN_RECIPIENTS = 3;
-const Constants = { MAILS, EMPTY_AUTHOR, EMPTY_RECIPIENTS, EMPTY_TITLE, SHOWN_RECIPIENTS, ACCOUNTS };
+const Constants = { MAILS, EMPTY_AUTHOR, EMPTY_RECIPIENTS, EMPTY_TITLE, SHOWN_RECIPIENTS, ACCOUNTS, ROUTES };
 export default Constants;
