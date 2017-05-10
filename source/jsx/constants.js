@@ -127,6 +127,13 @@ const MAILS = [
     ]
   }
 ];
+const EXAMPLE_MAIL = {
+  from: 'Yashwant Chavan <from@gmail.com>',
+  to: 'gernraudn@gmail.com',
+  subject: 'Send Email Using Node.js',
+  text: 'Node.js New world for me',
+  html: '<b>Node.js New world for me</b>'
+};
 const SHOWN_RECIPIENTS = 3;
-const Constants = { MAILS, EMPTY_AUTHOR, EMPTY_RECIPIENTS, EMPTY_TITLE, SHOWN_RECIPIENTS, ACCOUNTS, ROUTES };
+const Constants = { EXAMPLE_MAIL, MAILS, EMPTY_AUTHOR, EMPTY_RECIPIENTS, EMPTY_TITLE, SHOWN_RECIPIENTS, ACCOUNTS, ROUTES };
 export default Constants;

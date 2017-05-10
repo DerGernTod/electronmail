@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --env production",
     "webpack:dev": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --env development\"",
-    "electron:dev" : "electron . dev",
+    "electron:dev": "electron . dev",
     "start": "electron .",
     "lint:js": "eslint ."
   },
@@ -56,6 +56,7 @@
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
-    "nedb": "^1.8.0"
+    "nedb": "^1.8.0",
+    "nodemailer": "^4.0.1"
   }
 }
