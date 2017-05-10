@@ -1,5 +1,4 @@
 import React from 'react';
-import { changePassword } from '../../../service/crypto';
 import { addAccount, findAccount } from '../../../service/accounts';
 import sendMail from '../../../service/mails';
 import { hashHistory } from 'react-router';
@@ -21,7 +20,7 @@ let CreateAccountTab = React.createClass({
     return {
       value: '', 
       formEnabled: true,
-      accountName: '',
+      name: '',
       address: '',
       password: '',
       host: '',
@@ -37,7 +36,16 @@ let CreateAccountTab = React.createClass({
       ...this.state,
       formEnabled: false
     });
-    addAccount({id: Date.now(), name: this.state.accountName, address: this.state.address})
+    let { name, address, password, host, port, secure } = this.state;
+    addAccount({
+      id: Date.now(), 
+      name,
+      address,
+      password,
+      host,
+      port,
+      secure
+    })
     .then(id => {
       hashHistory.push(`${Constants.ROUTES.accounts}/${id}`);
       this.props.onAccountCreated(id);
@@ -50,32 +58,10 @@ let CreateAccountTab = React.createClass({
       })
     );
   },
-  handleDbPasswordTextField(evt) {
-    this.setState({
-      value : evt.target.value
-    });
-  },
-  handlePasswordChange(evt) {
-    evt.preventDefault();
-    let before = performance.now();
-    changePassword(this.state.value)
-    .then(() => 
-      this.setState({
-        ...this.state,
-        changeDuration : performance.now() - before
-      })
-    )
-    .catch(err => 
-      this.setState({
-        ...this.state,
-        changeDuration : 'error: ' + err
-      })
-    );
-  },
   handleTextChange(element, evt) {
     this.setState({
       ...this.state,
-      [element]: evt.target.value,
+      [element]: evt.target.type == 'checkbox' ? evt.target.checked : evt.target.value,
       mailCheckSuccessful: undefined
     });
   },
@@ -116,7 +102,7 @@ let CreateAccountTab = React.createClass({
         <h2>Create new Account</h2>
         <form onSubmit={this.handleAccountCreated}>
           <fieldset disabled={!this.state.formEnabled} className='flex'>
-            {this.createInput('accountName', 'text', 'Account name')}
+            {this.createInput('name', 'text', 'Account name')}
             {this.createInput('address', 'email', 'Address')}
             {this.createInput('password', 'password', 'Password')}
             {this.createInput('host', 'text', 'Host')}
@@ -126,13 +112,6 @@ let CreateAccountTab = React.createClass({
             <input type='submit' value='Create account' />
           </fieldset>
         </form>
-        <hr />
-        <h3>Change DB Encoding Password</h3>
-        <form onSubmit={this.handlePasswordChange}>
-          <input type='text' value={this.state.value} onChange={this.handleDbPasswordTextField} />
-          <input type='submit' value='Change db pass' />
-        </form>
-        {this.state.changeDuration && `Changing db password took ${this.state.changeDuration.toFixed(2)}ms`}
       </div>
     );
   }

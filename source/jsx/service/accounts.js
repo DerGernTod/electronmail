@@ -1,7 +1,7 @@
 import { find, getDb, insert, remove } from './nedb';
 let db = getDb('accounts');
 function findAccount(id) {
-  return find(db, {id});
+  return find(db, {id}).then(accounts => Promise.resolve(accounts[0]));
 }
 
 function findAllAccounts() {
