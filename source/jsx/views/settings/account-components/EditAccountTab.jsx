@@ -1,5 +1,8 @@
 import React from 'react';
 import ModalDialog from '../../utils/ModalDialog.jsx';
+import { deleteAccount } from '../../../service/accounts';
+import { hashHistory } from 'react-router';
+import Constants from '../../../constants';
 let EditAccountTab = React.createClass({
   propTypes: {
     accountId: React.PropTypes.number,
@@ -12,8 +15,9 @@ let EditAccountTab = React.createClass({
   },
   getInitialState() {
     return {
-      accountId : -1,
-      onAccountModified: () => {}
+      accountId: -1,
+      onAccountModified: () => {},
+      modalSpinEnabled: false
     };
   },
   componentWillReceiveProps(newProps) {
@@ -29,8 +33,23 @@ let EditAccountTab = React.createClass({
     });
   },
   onDelete() {
-    console.log(`delete accountid ${this.state.accountId}`);
-    this.setDeleteModalEnabled(false);
+    this.setState({
+      ...this.state,
+      modalSpinEnabled: true
+    });
+    deleteAccount(this.state.accountId)
+    .then(numDeleted => { console.log(`Deleted ${numDeleted} accounts`); })
+    .catch(error => { console.log('Error during deletion: ', error); })
+    .then(() => {
+      this.setState({
+        ...this.state,
+        modalSpinEnabled: false
+      });
+      this.setDeleteModalEnabled(false);
+
+      hashHistory.push(`${Constants.ROUTES.accounts}/-1`);
+      this.props.onAccountModified();
+    });
   },
   onAbort() {
     console.log('modal dialog aborted');
@@ -38,7 +57,7 @@ let EditAccountTab = React.createClass({
   },
   render() {
     let accountId = this.state.accountId;
-    let modal = <ModalDialog onAccept={this.onDelete} onAbort={this.onAbort} header='Really delete?' 
+    let modal = <ModalDialog spinEnabled={this.state.modalSpinEnabled} onAccept={this.onDelete} onAbort={this.onAbort} header='Really delete?' 
           message={`Do you really want to delete account ${accountId}?`} enabled={this.state.deleteModalEnabled} />;
     return (
       <div className='contentpane-container'>

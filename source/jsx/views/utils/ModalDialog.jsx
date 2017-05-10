@@ -2,11 +2,12 @@ import React from 'react';
 
 const ModalDialog = React.createClass({
   propTypes: {
-    onAccept: React.PropTypes.func,
-    onAbort: React.PropTypes.func,
+    onAccept: React.PropTypes.func.isRequired,
+    onAbort: React.PropTypes.func.isRequired,
     header: React.PropTypes.string,
-    message: React.PropTypes.string,
-    enabled: React.PropTypes.bool
+    message: React.PropTypes.string.isRequired,
+    enabled: React.PropTypes.bool,
+    spinEnabled: React.PropTypes.bool
   },
   getDefaultProps() {
     return {
@@ -14,11 +15,12 @@ const ModalDialog = React.createClass({
       onAbort: () => {},
       header: 'This is a modal dialog',
       message: 'This is the message. It can be longer than the header.',
-      enabled: false
+      enabled: false,
+      spinEnabled: false
     };
   },
   getInitialState() {
-    return { enabled: false };
+    return { enabled: false, spinEnabled: false };
   },
   handle(accepted, evt) {
     //stop propagation so that abort is not called additionally if accept is clicked
@@ -31,11 +33,10 @@ const ModalDialog = React.createClass({
     }
   },
   componentWillReceiveProps(newProps) {
-    if (newProps.enabled !== this.props.enabled) {
-      this.setState({
-        enabled: newProps.enabled
-      });
-    }
+    this.setState({
+      enabled: newProps.enabled,
+      spinEnabled: newProps.spinEnabled
+    });
   },
   render() {
     let className = `modal-dialog ${this.state.enabled ? 'enabled' : ''}`;
@@ -46,8 +47,10 @@ const ModalDialog = React.createClass({
           <h4>{this.props.header}</h4>
           <div>{this.props.message}</div>
           <div>
-            <button onClick={this.handle.bind(this, false)}>Abort</button>
-            <button onClick={this.handle.bind(this, true)}>Accept</button>
+            <button disabled={this.state.spinEnabled} onClick={this.handle.bind(this, false)}>Abort</button>
+            <button disabled={this.state.spinEnabled} onClick={this.handle.bind(this, true)}>
+              {this.state.spinEnabled ? 'Working on it...' : 'Accept'}
+            </button>
           </div>
         </div>
       </div>

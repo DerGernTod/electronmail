@@ -206,10 +206,10 @@ function find(db, args) {
   });
 }
 
-function update(db, query, update, settings) {
-  console.log('update db entries', query, update, settings, db);
+function update(db, query, update, args) {
+  console.log('update db entries', query, update, args, db);
   return new Promise((resolve, reject) => {
-    db.update(query, update, settings || {}, (err, numReplaced) => {
+    db.update(query, update, args || {}, (err, numReplaced) => {
       if (err) {
         reject(err);
       } else {
@@ -218,6 +218,20 @@ function update(db, query, update, settings) {
     });
   });
 }
+
+function remove(db, query, args) {
+  console.log('remove db entries', query, args, db);
+  return new Promise((resolve, reject) => {
+    db.remove(query, args || {}, (err, numRemoved) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(numRemoved);
+      }
+    });
+  });
+}
+
 function getDb(dbName) {
   return databases[dbName];
 }
@@ -231,4 +245,4 @@ function findMails(args) {
 }
 
 
-export { get, insert, find, findMails, getDb, update };
+export { get, insert, find, findMails, getDb, update, remove };

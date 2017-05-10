@@ -56,6 +56,9 @@ const AccountTabList = React.createClass({
   onAccountCreated(accountId) {
     this.updateAccountList(accountId);
   },
+  onAccountModified(accountId) {
+    this.updateAccountList(accountId);
+  },
   render(){
     var accountsList = [];
     accountsList.push(this.buildAccountPreview({id: -1, name: 'Create account'}));
@@ -78,7 +81,8 @@ const AccountTabList = React.createClass({
           transitionAppearTimeout={500}>
           {React.cloneElement(this.props.children, {
             key: mainKey,
-            onAccountCreated: this.onAccountCreated
+            onAccountCreated: this.onAccountCreated,
+            onAccountModified: this.onAccountModified
           })}
         </ReactCSSTransitionGroup>
       </div>
