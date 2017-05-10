@@ -80,7 +80,7 @@ let EditAccountTab = React.createClass({
   },
   createInput(name, type, title) {
     return (
-      <div className='flex'>
+      <div className='flex space-between align-items-center'>
         <label htmlFor={`account-input-${name}`}>{title}</label>
         {this.createElementInput(name, type)}
       </div>
@@ -126,12 +126,11 @@ let EditAccountTab = React.createClass({
     if (typeof this.state.mailCheckSuccessful == 'boolean') {
       buttonText = (this.state.mailCheckSuccessful ? 'Success!' : 'Failed!') + ' Retry?';
     }
-    let accountId = this.state.id;
     let modal = <ModalDialog spinEnabled={this.state.modalSpinEnabled} onAccept={this.onDelete} onAbort={this.onAbort} header='Really delete?' 
           message={`Do you really want to delete account '${this.state.name}'?`} enabled={this.state.deleteModalEnabled} />;
     return (
       <div className='contentpane-container'>
-        <h2>Edit account {this.state.name}</h2>
+        <h2>Edit {this.state.name}</h2>
         <form onSubmit={this.handleAccountModified}>
           <fieldset disabled={!this.state.formEnabled} className='flex'>
             {this.createInput('name', 'text', 'Account name')}
@@ -140,8 +139,10 @@ let EditAccountTab = React.createClass({
             {this.createInput('host', 'text', 'Host')}
             {this.createInput('port', 'number', 'Port')}
             {this.createInput('secure', 'checkbox', 'Secure')}
-            <button onClick={this.sendTestMail} disabled={this.state.mailCheckRunning}>{buttonText}</button>
-            <input type='submit' value='Create account' />
+            <div className='flex space-between'>
+              <button onClick={this.sendTestMail} disabled={this.state.mailCheckRunning}>{buttonText}</button>
+              <input type='submit' value='Create account' />
+            </div>
           </fieldset>
         </form>
         {modal}
