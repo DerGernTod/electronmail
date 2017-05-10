@@ -3,10 +3,14 @@
   height: 100%;
   margin: 0;
   padding: 0;
-  &::-webkit-scrollbar {
+  &::-webkit-scrollbar-thumb {
     background-color: @textcolor;
   }
-  overflow-y: scroll;
+  &:hover{
+    overflow-y: scroll;
+  }
+  overflow-x: hidden;
+  overflow-y: hidden;
   flex-basis: 300px;
   ol {
     width: 100%;

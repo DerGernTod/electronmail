@@ -21,10 +21,14 @@ const AccountTabList = React.createClass({
   getInitialState(){
     return { accounts : [] };
   },
-  componentDidMount(){
-    if (isNaN(this.props.params.account)) {
+  shouldComponentUpdate(nextProps){
+    if (isNaN(nextProps.params.account)) {
       hashHistory.push(`${Constants.ROUTES.accounts}/-1`);
+      return false;
     }
+    return true;
+  },
+  componentDidMount(){
     this.updateAccountList();
   },
   buildAccountPreview(account){
@@ -44,11 +48,13 @@ const AccountTabList = React.createClass({
     .then(accounts => this.setState({ accounts: accounts.sort((a, b) => {
       return a.name.localeCompare(b.name);
     })}))
-    .then(() => document.getElementById(`accounts-list-id-${scrollToId}`).scrollIntoViewIfNeeded());
+    .then(() => {
+      let element = document.getElementById(`accounts-list-id-${scrollToId}`);
+      element && element.scrollIntoViewIfNeeded();
+    });
   },
   onAccountCreated(accountId) {
     this.updateAccountList(accountId);
-    //scroll to accountId
   },
   render(){
     var accountsList = [];

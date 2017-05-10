@@ -7,7 +7,7 @@ let EditAccountTab = React.createClass({
   },
   getDefaultProps() {
     return {
-      accountId : undefined
+      accountId : -1
     };
   },
   getInitialState() {
@@ -17,12 +17,10 @@ let EditAccountTab = React.createClass({
     };
   },
   componentWillReceiveProps(newProps) {
-    if (newProps.accountId != this.state.accountId) {
-      this.setState({
-        ...this.state,
-        accountId: newProps.accountId
-      });
-    }
+    this.setState({
+      ...this.state,
+      accountId: newProps.accountId
+    });
   },
   setDeleteModalEnabled(enabled) {
     this.setState({

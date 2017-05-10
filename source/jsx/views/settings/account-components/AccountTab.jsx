@@ -1,6 +1,5 @@
 import React from 'react';
 import { changePassword } from '../../../service/crypto';
-import { findMails } from '../../../service/nedb';
 import { addAccount, findAccount } from '../../../service/accounts';
 import { hashHistory } from 'react-router';
 import Constants from '../../../constants';
@@ -36,17 +35,24 @@ const AccountTab = React.createClass({
   },
   
   componentDidMount() {
-    let accountId = this.props.params.account;
+    this.updateView(Number(this.props.params.account) || -1);
+  },
+  componentWillReceiveProps(newProps) {
+    this.updateView(Number(newProps.params.account) || -1);
+  },
+  updateView(accountId) {
     if (accountId >= 0) {
       findAccount(accountId)
       .then(account => 
         this.setState({
+          ...this.state,
           connected: true,
           data: account
         })
       )
       .catch(err => 
         this.setState({
+          ...this.state,
           connected : true,
           data : err
         })
@@ -103,7 +109,7 @@ const AccountTab = React.createClass({
   render() {
     var accountId = Number(this.props.params.account);
     if (isNaN(accountId)) {
-      return (<div>Invalid account id: {accountId}</div>);
+      return (<div></div>);
     }
     if (accountId < 0) {
       return <div className='contentpane-container'>

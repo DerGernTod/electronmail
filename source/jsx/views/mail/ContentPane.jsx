@@ -6,12 +6,10 @@ import HistoryPane from './HistoryPane.jsx';
 import Constants from '../../constants';
 const ContentPane = React.createClass({
   propTypes: {
-    children: React.PropTypes.element.isRequired,
     params: React.PropTypes.object
   },
   getDefaultProps: function() {
     return {
-      children: [],
       params: {
         mailid : -1
       }
@@ -38,7 +36,13 @@ const ContentPane = React.createClass({
   },
   render(){
     if (isNaN(this.props.params.mailid)) {
-      return <div className='contentpane-container'></div>;
+      return (
+        <div className='contentpane-container'>
+          <div className='flex-center'>
+            <h1>Select a mail to continue</h1>
+          </div>
+        </div>
+      );
     } else {
       return (
         <div className='contentpane-container'>
