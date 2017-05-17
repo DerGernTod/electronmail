@@ -1,4 +1,5 @@
 import React from 'react';
+import './inputs.less';
 import ModalDialog from '../../utils/ModalDialog.jsx';
 import { deleteAccount, findAccount } from '../../../service/accounts';
 import sendMail from '../../../service/mails';
@@ -25,7 +26,6 @@ let EditAccountTab = React.createClass({
       secure: false,
       onAccountModified: () => {},
       modalSpinEnabled: false,
-      formEnabled: true,
       mailCheckSuccessful: undefined,
       mailCheckRunning: false
     };
@@ -80,22 +80,26 @@ let EditAccountTab = React.createClass({
   },
   createInput(name, type, title) {
     return (
-      <div className='flex space-between align-items-center'>
-        <label htmlFor={`account-input-${name}`}>{title}</label>
+      <fieldset className="form-fieldset ui-input" 
+              disabled={this.state.mailCheckRunning} >
         {this.createElementInput(name, type)}
-      </div>
+        <label htmlFor={`account-input-${name}`}>
+          <span data-text={title}>{title}</span>
+        </label>
+      </fieldset>
     );
   },
-  createElementInput(name, type) {
+  createElementInput(name, type, tabIndex) {
     let id = `account-input-${name}`;
     if (type == 'checkbox') {
       return <input id={id} type={type} 
           checked={this.state[name]} 
-          onChange={this.handleTextChange.bind(this, name)} />;
+          onChange={this.handleTextChange.bind(this, name)} 
+          disabled={this.state.mailCheckRunning} />;
     } else {
-      return <input id={id} type={type} 
-          value={this.state[name]} 
-          onChange={this.handleTextChange.bind(this, name)} />;
+      return <input type={type} id={id} tabIndex={tabIndex} 
+              onBlur={function() { this.classList.toggle('filled', !!this.target.value); }}
+              value={this.state[name]} onChange={this.handleTextChange.bind(this, name)}/>;
     }
   },
   onDelete() {
@@ -131,23 +135,21 @@ let EditAccountTab = React.createClass({
     return (
       <div className='contentpane-container'>
         <h2>Edit {this.state.name}</h2>
-        <form onSubmit={this.handleAccountModified}>
-          <fieldset disabled={!this.state.formEnabled} className='flex'>
-            {this.createInput('name', 'text', 'Account name')}
-            {this.createInput('address', 'email', 'Address')}
-            {this.createInput('password', 'password', 'Password')}
-            {this.createInput('host', 'text', 'Host')}
-            {this.createInput('port', 'number', 'Port')}
-            {this.createInput('secure', 'checkbox', 'Secure')}
-            <div className='flex space-between'>
-              <button onClick={this.sendTestMail} disabled={this.state.mailCheckRunning}>{buttonText}</button>
-              <input type='submit' value='Create account' />
-            </div>
-          </fieldset>
+        <form disabled={this.state.mailCheckRunning} className='flex' onSubmit={this.handleAccountModified}>
+          {this.createInput('name', 'text', 'Account name', 0)}
+          {this.createInput('address', 'email', 'Address', 1)}
+          {this.createInput('password', 'password', 'Password', 2)}
+          {this.createInput('host', 'text', 'Host', 3)}
+          {this.createInput('port', 'number', 'Port', 4)}
+          {this.createInput('secure', 'checkbox', 'Secure', 5)}
+          <div className='flex space-between'>
+            <button onClick={this.sendTestMail} disabled={this.state.mailCheckRunning}>{buttonText}</button>
+            <input type='submit' value='Create account' />
+          </div>
         </form>
-        {modal}
-        <button onClick={() => this.setDeleteModalEnabled(true)}>Delete</button>
-      </div>
+      {modal}
+      <button onClick={() => this.setDeleteModalEnabled(true)}>Delete</button>
+    </div>
     );
   }
 });
