@@ -1,7 +1,7 @@
 import '../../content-pane-fade.less';
 import './accounts.less';
 import React from 'react';
-import {hashHistory, Link} from 'react-router';
+import {Link} from 'react-router';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {findAllAccounts} from '../../../service/accounts';
 import Constants from '../../../constants';
@@ -21,19 +21,13 @@ const AccountTabList = React.createClass({
   getInitialState(){
     return { accounts : [] };
   },
-  shouldComponentUpdate(nextProps){
-    if (isNaN(nextProps.params.account)) {
-      hashHistory.push(`${Constants.ROUTES.accounts}/-1`);
-      return false;
-    }
-    return true;
-  },
+
   componentDidMount(){
     this.updateAccountList();
   },
   buildAccountPreview(account){
     var linkTarget = `${Constants.ROUTES.accounts}/${account.id}`;
-        
+
     return (
       <li key={account.id} id={`accounts-list-id-${account.id}`}>
         <Link to={linkTarget} activeClassName="active">
@@ -71,7 +65,7 @@ const AccountTabList = React.createClass({
             {accountsList}
           </ol>
         </div>
-        <ReactCSSTransitionGroup 
+        <ReactCSSTransitionGroup
           component="div"
           className="contentpane float-left"
           transitionName="content-pane-fade"

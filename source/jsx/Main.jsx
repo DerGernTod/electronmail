@@ -22,18 +22,18 @@ const Main = React.createClass({
     var mainKey = locations[0] + locations[1]; //0 is always '#'
     switch (mainKey) {
     case '#mail':
-      mainKey += '/' + locations[1] + '/' + (locations[2] || '') + '/' + (locations[3] || '');
+      mainKey += '/' + (locations[2] || '') + '/' + (locations[3] || '');
       break;
     case '#attachments':
-      mainKey += '/' + locations[1] + '/' + (locations[2] || '') + '/' + (locations[3] || '');
+      mainKey += '/' + (locations[2] || '') + '/' + (locations[3] || '');
       break;
     case '#settings':
-                //just switch if switch from /settings/account to /settings/calendar or similar
-      mainKey += '/' + locations[1] + '/' + locations[2];
+      //don't switch if settings directory changes
       break;
     default:
       break;
     }
+    console.log('mainkey', mainKey);
     console.log('key: ' + location.hash);
     return (
             <div>
@@ -54,13 +54,13 @@ const Main = React.createClass({
                     </nav>
                     <nav>
                         <div><span className="fa fa-cogs"> </span>Configuration</div>
-                        <Link to="/settings/accounts" activeClassName="active">Accounts</Link>
+                        <Link to="/settings/accounts/-1" activeClassName="active">Accounts</Link>
                         <Link to="/settings/calendar" activeClassName="active">Calendar</Link>
                         <Link to="/settings/profile" activeClassName="active">Profile</Link>
                         <Link to="/settings/synchronization" activeClassName="active">Synchronization</Link>
                     </nav>
-                </div>    
-                <ReactCSSTransitionGroup 
+                </div>
+                <ReactCSSTransitionGroup
                     component="div"
                     className="contentcontainer float-left"
                     transitionName="content-fade"

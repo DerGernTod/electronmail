@@ -12,7 +12,6 @@ import ContentPane from './views/mail/ContentPane.jsx';
 import Attachments from './views/attachments/Attachments.jsx';
 import AccountTabList from './views/settings/account-components/AccountTabList.jsx';
 import AccountTab from './views/settings/account-components/AccountTab.jsx';
-
 var routes = (
   <Router history={hashHistory}>
     <Route path="/" component={Main}>
@@ -27,7 +26,6 @@ var routes = (
       </Route>
       <Route path="/settings" component={Settings}>
         <Route path="/settings/accounts" component={AccountTabList}>
-          <IndexRoute component={AccountTab} params={{account : -1}} />
           <Route path="/settings/accounts/:account" component={AccountTab} />
         </Route>
         <Route path="/settings/calendar" component={Calendar} />
