@@ -6,8 +6,6 @@ const PATHS = {
   app: path.resolve(__dirname, 'source/jsx')
 };
 
-
-
 var config = {
   entry: PATHS.app + '/App.jsx',
   plugins: [

@@ -103,7 +103,7 @@
 }
 
 .ui-input input.filled {
-  color: @textcolor;
+  color: @labelColor;
   
   & + label {
     &::after {
@@ -119,7 +119,7 @@
   }
 }
 
-.ui-input input:focus {
+.ui-input input:focus, .ui-input input.filled:focus {
   color: @labelColor;
   
   & + label {

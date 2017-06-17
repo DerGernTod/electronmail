@@ -1,4 +1,4 @@
-import { find, getDb, insert, remove } from './nedb';
+import { find, getDb, insert, remove, update } from './nedb';
 let db = getDb('accounts');
 function findAccount(id) {
   return find(db, {id}).then(accounts => Promise.resolve(accounts[0]));
@@ -16,5 +16,9 @@ function deleteAccount(accountId) {
   return remove(db, {id : accountId});
 }
 
+function updateAccount(account) {
+  return update(db, {id : account.id}, account);
+}
+
 export default findAccount;
-export { findAllAccounts, findAccount, addAccount, deleteAccount };
+export { findAllAccounts, findAccount, addAccount, deleteAccount, updateAccount };
