@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Babili = require('babili-webpack-plugin');
 const PATHS = {
   build: path.resolve(__dirname, 'build'),
   app: path.resolve(__dirname, 'source/jsx')
@@ -49,8 +50,16 @@ var config = {
 
 module.exports = (env) => {
   var cfg = config;
+  var loaderPluginConfig = {
+    minimize: true,
+    debug: false
+  };
   if (env == 'development') {
     cfg.plugins.push(new webpack.SourceMapDevToolPlugin());
+    loaderPluginConfig.debug = true;
+  } else {
+    cfg.plugins.push(new Babili());
   }
+  cfg.plugins.push(new webpack.LoaderOptionsPlugin(loaderPluginConfig));
   return cfg;
 };

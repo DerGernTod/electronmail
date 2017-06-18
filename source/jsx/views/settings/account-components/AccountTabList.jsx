@@ -5,12 +5,13 @@ import {Link} from 'react-router';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {findAllAccounts} from '../../../service/accounts';
 import Constants from '../../../constants';
+import AccountTab from './AccountTab.jsx';
 const AccountTabList = React.createClass({
   propTypes: {
     children: React.PropTypes.element.isRequired,
     params: React.PropTypes.object
   },
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       children: [],
       params: {
@@ -26,7 +27,7 @@ const AccountTabList = React.createClass({
     this.updateAccountList();
   },
   buildAccountPreview(account){
-    var linkTarget = `${Constants.ROUTES.accounts}/${account.id}`;
+    let linkTarget = `${Constants.ROUTES.accounts}/${account.id}`;
 
     return (
       <li key={account.id} id={`accounts-list-id-${account.id}`}>
@@ -54,18 +55,15 @@ const AccountTabList = React.createClass({
     this.updateAccountList(accountId);
   },
   render(){
-    var accountsList = [];
+    let accountsList = [];
     accountsList.push(this.buildAccountPreview({id: -1, name: 'Create account'}));
     this.state.accounts.forEach(mail => accountsList.push(this.buildAccountPreview(mail)));
-    var mainKey = this.props.params.account;
-    return (
-      <div className='accounts'>
-        <div className='account-tab-list float-left'>
-          <ol>
-            {accountsList}
-          </ol>
-        </div>
-        <ReactCSSTransitionGroup
+    let mainKey = this.props.params.account;
+    let elem;
+    if (!this.props.children) {
+      elem = <div />;
+    } else {
+      elem = <ReactCSSTransitionGroup
           component="div"
           className="contentpane float-left"
           transitionName="content-pane-fade"
@@ -78,7 +76,16 @@ const AccountTabList = React.createClass({
             onAccountCreated: this.onAccountCreated,
             onAccountModified: this.onAccountModified
           })}
-        </ReactCSSTransitionGroup>
+        </ReactCSSTransitionGroup>;
+    }
+    return (
+      <div className='accounts'>
+        <div className='account-tab-list float-left'>
+          <ol>
+            {accountsList}
+          </ol>
+        </div>
+        {elem}
       </div>
     );
   }

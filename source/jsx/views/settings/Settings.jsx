@@ -1,9 +1,16 @@
-import './settings-accounts.less';
+//import './settings-accounts.less';
 import './settings.less';
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { hashHistory } from 'react-router';
+import Constants from '../../constants';
 const Settings = React.createClass({
-  render : function(){
+  componentWillReceiveProps(newProps) {
+    if (location.href.indexOf(Constants.ROUTES.accounts) > -1 && isNaN(newProps.params.account)) {
+      hashHistory.push(Constants.ROUTES.accounts + '/-1');
+    }
+  },
+  render() {
     return (
         <div>
             <h1>Settings</h1>
@@ -17,7 +24,7 @@ const Settings = React.createClass({
                 transitionAppear={true}
                 transitionAppearTimeout={500}>
                 {React.cloneElement(this.props.children, {
-                  key: location.hash.split('/')[2] //only switch if settings-page changes
+                  key: location.hash.split('/')[2], //only switch if settings-page changes
                 })}
             </ReactCSSTransitionGroup>
         </div>

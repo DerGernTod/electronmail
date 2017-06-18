@@ -54,7 +54,7 @@ const Main = React.createClass({
                     </nav>
                     <nav>
                         <div><span className="fa fa-cogs"> </span>Configuration</div>
-                        <Link to="/settings/accounts/-1" activeClassName="active">Accounts</Link>
+                        <Link to="/settings/accounts" activeClassName="active">Accounts</Link>
                         <Link to="/settings/calendar" activeClassName="active">Calendar</Link>
                         <Link to="/settings/profile" activeClassName="active">Profile</Link>
                         <Link to="/settings/synchronization" activeClassName="active">Synchronization</Link>
