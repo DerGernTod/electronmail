@@ -1,0 +1,12 @@
+@import "../../constants.less";
+
+.settings {
+  .settings-height-mixin();
+  &.contentcontainer > div {
+    .settings-height-mixin()
+  }
+  
+}
+.settings-height-mixin() {
+  height: @settingsHeight;
+}

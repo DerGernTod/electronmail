@@ -54,17 +54,10 @@
 .accounts{
   display: flex;
   flex-direction: row;
-  .settings-height-mixin();
-  .contentpane-container{
-    .settings-height-mixin();    
-  }
+  
   form {
     flex-direction: column;
     max-width: 400px;
     width: 100%;
   }
-}
-
-.settings-height-mixin(){
-  height: ~'calc(100% - 9.5rem)';
 }

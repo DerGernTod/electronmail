@@ -1,4 +1,5 @@
 import './settings-accounts.less';
+import './settings.less';
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 const Settings = React.createClass({
@@ -9,7 +10,7 @@ const Settings = React.createClass({
 
             <ReactCSSTransitionGroup
                 component="div"
-                className="contentcontainer no-offset float-left"
+                className="contentcontainer no-offset float-left settings"
                 transitionName="content-fade"
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={500}
