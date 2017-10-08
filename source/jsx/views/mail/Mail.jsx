@@ -8,7 +8,7 @@ import Constants from '../../constants.js';
 const Mail = ({ match, location }) => {
   const { accounts, folder } = match.params;
   return (
-    <div>
+    <div className='flex'>
       <Preview match={match} mails={Constants.MAILS} accounts={accounts} folder={folder} />
       <ReactCSSTransitionGroup
         component="div"

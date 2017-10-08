@@ -70,6 +70,19 @@
         align-self: flex-end;
     }
 }
+.main-container{
+  position: relative;
+  width: calc(~"100% - " @menuContainerWidth);
+  height: 100%;
+  
+  background-color: @contentBackground;
+  color: @textcolor;
+  & > div {
+    position: absolute;
+    .full-height;
+    .full-width;
+  }
+}
 
 .contentcontainer{
   position: relative;
