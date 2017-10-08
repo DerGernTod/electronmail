@@ -40,39 +40,40 @@ let AccountTab = React.createClass({
     findAccount(id)
     .then(account => {
       console.log('found account', account);
-      this.setState({
+      this.setStateIfMounted({
         ...account
       });
     })
     .catch(() =>
-      this.setState({
+      this.setStateIfMounted({
         id: 'Invalid id. no account with this id found!'
       })
     );
   },
   componentWillMount() {
+    this.isUnmounted = false;
     this.loadAccount(Number(this.props.match.params.account));
   },
   componentWillReceiveProps(newProps) {
     this.loadAccount(Number(newProps.match.params.account));
   },
+  componentWillUnmount() {
+    this.isUnmounted = true;
+  },
   handleTextChange(element, evt) {
     this.setState({
-      ...this.state,
       [element]: evt.target.type == 'checkbox' ? evt.target.checked : evt.target.value,
       mailCheckSuccessful: undefined
     });
   },
   setDeleteModalEnabled(enabled) {
     this.setState({
-      ...this.state,
       deleteModalEnabled: enabled
     });
   },
 
   sendTestMail() {
     this.setState({
-      ...this.state,
       formEnabled: true
     });
     sendMail(this.state)
@@ -81,8 +82,7 @@ let AccountTab = React.createClass({
         console.error('Error sending mail', error);
         return Promise.resolve(false);
       })
-      .then(success => this.setState({
-        ...this.state,
+      .then(success => this.setStateIfMounted({
         mailCheckSuccessful: success,
         formEnabled: false
       }));
@@ -123,15 +123,13 @@ let AccountTab = React.createClass({
   },
   onDelete() {
     this.setState({
-      ...this.state,
       modalSpinEnabled: true
     });
     deleteAccount(this.state.id)
       .then(numDeleted => { console.log(`Deleted ${numDeleted} accounts`); })
       .catch(error => { console.log('Error during deletion: ', error); })
       .then(() => {
-        this.setState({
-          ...this.state,
+        this.setStateIfMounted({
           modalSpinEnabled: false
         });
         this.setDeleteModalEnabled(false);
@@ -140,15 +138,18 @@ let AccountTab = React.createClass({
         this.props.onAccountModified();
       });
   },
+  setStateIfMounted(newState) {
+    if (!this.isUnmounted) {
+      this.setState(newState);
+    }
+  },
   onAbort() {
-    console.log('modal dialog aborted');
     this.setDeleteModalEnabled(false);
   },
   handleFormSubmit(evt) {
     evt.preventDefault();
     let {id, name, address, host, port, password, secure} = this.state;
     this.setState({
-      ...this.state,
       formEnabled: false
     });
     if (id >= 0) {
@@ -158,8 +159,7 @@ let AccountTab = React.createClass({
         this.props.onAccountModified();
       })
       .catch(error => Promise.resolve(error))
-      .then(error => this.setState({
-        ...this.state,
+      .then(error => this.setStateIfMounted({
         formEnabled: true,
         error
       }));
@@ -179,8 +179,7 @@ let AccountTab = React.createClass({
         this.props.onAccountCreated(id);
       })
       .catch(error =>
-        this.setState({
-          ...this.state,
+        this.setStateIfMounted({
           formEnabled: true,
           error
         })
