@@ -1,29 +1,25 @@
 import '../../content-pane-fade.less';
 import './accounts.less';
 import React from 'react';
-import {Link} from 'react-router';
+import {Route, Switch} from 'react-router';
+import {NavLink} from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {findAllAccounts} from '../../../service/accounts';
 import Constants from '../../../constants';
 import AccountTab from './AccountTab.jsx';
 const AccountTabList = React.createClass({
   propTypes: {
-    children: React.PropTypes.element.isRequired,
-    params: React.PropTypes.object
+    location: React.PropTypes.object,
+    match: React.PropTypes.shape({
+      params: React.PropTypes.shape({
+        account: React.PropTypes.string
+      })
+    })
   },
-  getDefaultProps() {
-    return {
-      children: [],
-      params: {
-        account : -1
-      }
-    };
-  },
-  getInitialState(){
-    return { accounts : [] };
-  },
-
-  componentDidMount(){
+  componentWillMount(){
+    this.setState({
+      accounts: []
+    });
     this.updateAccountList();
   },
   buildAccountPreview(account){
@@ -31,10 +27,10 @@ const AccountTabList = React.createClass({
 
     return (
       <li key={account.id} id={`accounts-list-id-${account.id}`}>
-        <Link to={linkTarget} activeClassName="active">
+        <NavLink to={linkTarget} activeClassName="active" isActive={() => account.id == this.props.match.params.account || (account.id == '-1' && typeof this.props.match.params.account == 'undefined')} >
           <div className='author'>{account.name}</div>
           {account.address ? (<div className='title'>{account.address}</div>) : null}
-        </Link>
+        </NavLink>
       </li>
     );
   },
@@ -48,44 +44,36 @@ const AccountTabList = React.createClass({
       element && element.scrollIntoViewIfNeeded();
     });
   },
-  onAccountCreated(accountId) {
-    this.updateAccountList(accountId);
-  },
-  onAccountModified(accountId) {
-    this.updateAccountList(accountId);
-  },
   render(){
     let accountsList = [];
     accountsList.push(this.buildAccountPreview({id: -1, name: 'Create account'}));
     this.state.accounts.forEach(mail => accountsList.push(this.buildAccountPreview(mail)));
-    let mainKey = this.props.params.account;
-    let elem;
-    if (!this.props.children) {
-      elem = <div />;
-    } else {
-      elem = <ReactCSSTransitionGroup
-          component="div"
-          className="contentpane float-left"
-          transitionName="content-pane-fade"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={500}
-          transitionAppear={true}
-          transitionAppearTimeout={500}>
-          {React.cloneElement(this.props.children, {
-            key: mainKey,
-            onAccountCreated: this.onAccountCreated,
-            onAccountModified: this.onAccountModified
-          })}
-        </ReactCSSTransitionGroup>;
+    if (!accountsList.length) {
+      accountsList.push(<li>Loading accounts...</li>);
     }
+    let mainKey = this.props.match.params.account;
     return (
       <div className='accounts'>
-        <div className='account-tab-list float-left'>
+        <div className='account-tab-list'>
           <ol>
             {accountsList}
           </ol>
         </div>
-        {elem}
+        <ReactCSSTransitionGroup
+        component="div"
+        className="contentpane"
+        transitionName="content-pane-fade"
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={500}
+        transitionAppear={true}
+        transitionAppearTimeout={500}>
+        <Switch key={mainKey} location={this.props.location}>
+          <Route path="/settings/accounts/:account?" component={props =>
+            <AccountTab {...props} onAccountCreated={id => this.updateAccountList(id)} onAccountModified={id => this.updateAccountList(id)} />
+          } />
+        </Switch>
+
+        </ReactCSSTransitionGroup>
       </div>
     );
   }

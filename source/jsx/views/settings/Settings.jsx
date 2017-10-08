@@ -2,33 +2,42 @@
 import './settings.less';
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import { hashHistory } from 'react-router';
+import { Switch, Route } from 'react-router';
+import AccountTab from './account-components/AccountTab.jsx';
+import AccountTabList from './account-components/AccountTabList.jsx';
+import Calendar from './Calendar.jsx';
+import Profile from './Profile.jsx';
+import Synchronization from './Synchronization.jsx';
 import Constants from '../../constants';
-const Settings = React.createClass({
-  componentWillReceiveProps(newProps) {
-    if (location.href.indexOf(Constants.ROUTES.accounts) > -1 && isNaN(newProps.params.account)) {
-      hashHistory.push(Constants.ROUTES.accounts + '/-1');
-    }
-  },
-  render() {
-    return (
-        <div>
-            <h1>Settings</h1>
+const Settings = ({location, match}) => {
+  return (
+    <div className='flex flex-column full-height'>
+      <h1>Settings</h1>
 
-            <ReactCSSTransitionGroup
-                component="div"
-                className="contentcontainer no-offset float-left settings"
-                transitionName="content-fade"
-                transitionEnterTimeout={500}
-                transitionLeaveTimeout={500}
-                transitionAppear={true}
-                transitionAppearTimeout={500}>
-                {React.cloneElement(this.props.children, {
-                  key: location.hash.split('/')[2], //only switch if settings-page changes
-                })}
-            </ReactCSSTransitionGroup>
-        </div>
-    );
-  }
-});
+      <ReactCSSTransitionGroup
+        component="div"
+        className="contentcontainer settings no-offset"
+        transitionName="content-fade"
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={500}
+        transitionAppear={true}
+        transitionAppearTimeout={500}>
+          <Switch key={match.params.page} location={location}>
+            <Route path="/settings/accounts/:account?" component={AccountTabList} />
+            <Route path="/settings/calendar" component={Calendar} />
+            <Route path="/settings/profile" component={Profile} />
+            <Route path="/settings/synchronization" component={Synchronization} />
+          </Switch>
+      </ReactCSSTransitionGroup>
+    </div>
+  );
+};
+Settings.propTypes = {
+  location: React.PropTypes.object,
+  match: React.PropTypes.shape({
+    params: React.PropTypes.shape({
+      page: React.PropTypes.string
+    })
+  })
+};
 export default Settings;

@@ -7,13 +7,16 @@ import { hashHistory } from 'react-router';
 import Constants from '../../../constants';
 let AccountTab = React.createClass({
   propTypes: {
-    params: React.PropTypes.object,
+    match: React.PropTypes.shape({
+      params: React.PropTypes.shape({
+        account: React.PropTypes.string
+      })
+    }),
     onAccountModified: React.PropTypes.func,
     onAccountCreated: React.PropTypes.func
   },
   getDefaultProps() {
     return {
-      params: { account: -1 },
       onAccountModified: () => {},
       onAccountCreated: () => {}
     };
@@ -33,22 +36,25 @@ let AccountTab = React.createClass({
       formEnabled: false
     };
   },
-  componentWillReceiveProps(newProps) {
-
-    findAccount(Number(newProps.params.account))
-      .then(account => {
-        console.log('found account', account);
-        this.setState({
-          ...this.state,
-          ...account
-        });
+  loadAccount(id) {
+    findAccount(id)
+    .then(account => {
+      console.log('found account', account);
+      this.setState({
+        ...account
+      });
+    })
+    .catch(error =>
+      this.setState({
+        id: 'Invalid id. no account with this id found!'
       })
-      .catch(error =>
-        this.setState({
-          ...this.state,
-          id: 'Invalid id. no account with this id found!'
-        })
-      );
+    );
+  },
+  componentWillMount() {
+    this.loadAccount(Number(this.props.match.params.account));
+  },
+  componentWillReceiveProps(newProps) {
+    this.loadAccount(Number(newProps.match.params.account));
   },
   handleTextChange(element, evt) {
     this.setState({

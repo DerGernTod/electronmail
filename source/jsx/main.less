@@ -18,6 +18,9 @@
 .flex {
     display: flex;
 }
+.flex-column {
+  flex-direction: column;
+}
 .align-items-center{
     align-items: center;
 }
@@ -69,18 +72,19 @@
 }
 
 .contentcontainer{
-    background-color: @contentBackground;
-    width: calc(~"100% - " @menuContainerWidth);
-    height: 100%;
-    color: @textcolor;
-    & > div{
-        position: absolute;
-        width: 100%;
-        height: 100%;
-    }
-    &.no-offset{
-      height: @settingsHeight;
-    }
+  position: relative;
+  background-color: @contentBackground;
+  width: 100%;
+  height: 100%;
+  color: @textcolor;
+  & > div{
+      //position: absolute;
+      width: 100%;
+      //height: 100%;
+  }
+  &.no-offset{
+    height: @settingsHeight;
+  }
 }
 
 .menucontainer{

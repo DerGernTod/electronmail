@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-import { Route, IndexRoute,  hashHistory, Router } from 'react-router';
+import { Route, Router } from 'react-router';
+import createHashHistory from 'history/createHashHistory';
 import Main from './Main.jsx';
 import Test from './Test.jsx';
 import Settings from './views/settings/Settings.jsx';
@@ -12,26 +13,11 @@ import ContentPane from './views/mail/ContentPane.jsx';
 import Attachments from './views/attachments/Attachments.jsx';
 import AccountTabList from './views/settings/account-components/AccountTabList.jsx';
 import AccountTab from './views/settings/account-components/AccountTab.jsx';
+const history = createHashHistory();
 var routes = (
-  <Router history={hashHistory}>
+  <Router history={history}>
     <Route path="/" component={Main}>
-      <IndexRoute component={Test} />
-      <Route path="/mail/:accounts/:folder" component={Mail}>
-        <IndexRoute component={ContentPane} />
-        <Route path="/mail/:accounts/:folder/:mailid" component={ContentPane} />
-      </Route>
-      <Route path="/attachments" component={Test}>
-        <IndexRoute component={Attachments} />
-        <Route path="/attachments/collection" component={Attachments} />
-      </Route>
-      <Route path="/settings" component={Settings}>
-        <Route path="/settings/accounts" component={AccountTabList}>
-          <Route path="/settings/accounts/:account" component={AccountTab} />
-        </Route>
-        <Route path="/settings/calendar" component={Calendar} />
-        <Route path="/settings/profile" component={Profile} />
-        <Route path="/settings/synchronization" component={Synchronization} />
-      </Route>
+
     </Route>
   </Router>
 );

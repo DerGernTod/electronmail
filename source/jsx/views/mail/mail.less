@@ -2,16 +2,14 @@
 .contentpane-container{
     display: flex;
     flex-direction: column;
-    width: @contentPaneWidth;
-    height: 100%;
+    width: 100%;
+    padding: 0 0 @scrollbarWidth @scrollbarWidth;
     position: absolute;
-    padding-left: @scrollbarWidth;
     //background-color: @textcolor;
     //color: @menuPaneBackground;
     & > .mail-header{
         border-bottom: 1px solid @textcolor;
     }
-    overflow-y: scroll;
 }
 .content-padding{
     padding-left: @contentPaddingLeftRight;
@@ -78,9 +76,12 @@
 
 
 .contentpane{
-    width: @contentPaneWidth;
-    height: 100%;
-    max-width: 100%;
-    background-color: @textcolor;
-    color: @menuPaneBackground;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  background-color: @textcolor;
+  color: @menuPaneBackground;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }

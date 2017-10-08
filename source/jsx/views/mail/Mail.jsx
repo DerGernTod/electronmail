@@ -1,59 +1,36 @@
 import './mail.less';
 import React from 'react';
-import {Link} from 'react-router';
+import { Route, Switch } from 'react-router';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Preview from './Preview.jsx';
 import ContentPane from './ContentPane.jsx';
 import Constants from '../../constants.js';
-const Mail = React.createClass({
-  propTypes: {
-    children: React.PropTypes.element.isRequired,
-    params: React.PropTypes.object
-  },
-  getDefaultProps: function() {
-    return {
-      children: [],
-      params: {
-        accounts : ''
-      }
-    };
-  },
-  getInitialState : function(){
-    return {
-      accounts : [],
-      folder : ''
-    };
-  },
-  componentDidMount : function(){
-    this.setState({
-      accounts: this.props.params.accounts.split(';'),
-      folder : this.props.params.folder
-    });
-  },
-  getMails : function(){
-        //TODO: look in db here
-    return Constants.MAILS;
-  },
-  render : function(){
-    var mails = this.getMails();
-    return (
-            <div>
-                <Preview mails={mails} accounts={this.state.accounts.join(';')} folder={this.state.folder} className="float-left mail-preview" />
-                
-                <ReactCSSTransitionGroup 
-                    component="div"
-                    className="contentpane float-left"
-                    transitionName="content-pane-fade"
-                    transitionEnterTimeout={500}
-                    transitionLeaveTimeout={500}
-                    transitionAppear={true}
-                    transitionAppearTimeout={500}>
-                    {React.cloneElement(this.props.children, {
-                      key: location.hash
-                    })}
-                </ReactCSSTransitionGroup>
-            </div>
-    );
-  }
-});
+const Mail = ({ match, location }) => {
+  const { accounts, folder } = match.params;
+  return (
+    <div>
+      <Preview match={match} mails={Constants.MAILS} accounts={accounts} folder={folder} />
+      <ReactCSSTransitionGroup
+        component="div"
+        className="contentpane float-left"
+        transitionName="content-pane-fade"
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={500}
+        transitionAppear={true}
+        transitionAppearTimeout={500}>
+        <Route path={`/mail/${accounts}/${folder}/:mailid?`} key={location.pathname} component={ContentPane} location={location} />
+      </ReactCSSTransitionGroup>
+    </div>
+  );
+};
+Mail.propTypes = {
+  children: React.PropTypes.arrayOf(React.PropTypes.element),
+  match: React.PropTypes.shape({
+    params: React.PropTypes.shape({
+      accounts: React.PropTypes.string,
+      folder: React.PropTypes.string
+    }).isRequired
+  }).isRequired,
+  location: React.PropTypes.object
+};
 export default Mail;
