@@ -1,11 +1,11 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-import { Route, Router } from 'react-router';
-import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux';
+import { Route } from 'react-router';
+import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import createHashHistory from 'history/createHashHistory';
-import Main from './Main.jsx';
+import Main from './components/Main.jsx';
 const history = createHashHistory();
 const middleware = routerMiddleware(history);
 const store = createStore(

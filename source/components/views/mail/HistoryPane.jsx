@@ -1,4 +1,4 @@
-import './mail-history.less';
+import './styles/mail-history.less';
 import React from 'react';
 import HistoryMail from './HistoryMail.jsx';
 const HistoryPane = ({historyData}) => {

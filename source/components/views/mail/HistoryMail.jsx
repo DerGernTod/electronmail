@@ -1,5 +1,4 @@
 import React from 'react';
-import Constants from '../../constants';
 import MailHeader from './MailHeader.jsx';
 const HistoryMail = ({children, author, recipients}) => {
   return (

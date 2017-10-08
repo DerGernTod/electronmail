@@ -1,11 +1,11 @@
-import '../../content-pane-fade.less';
-import './accounts.less';
+import '../../styles/content-pane-fade.less';
+import './styles/accounts.less';
 import React from 'react';
 import {Route, Switch} from 'react-router';
 import {NavLink} from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import {findAllAccounts} from '../../../service/accounts';
-import Constants from '../../../constants';
+import {findAllAccounts} from '../../../../service/accounts';
+import Constants from '../../../../constants';
 import AccountTab from './AccountTab.jsx';
 const AccountTabList = React.createClass({
   propTypes: {

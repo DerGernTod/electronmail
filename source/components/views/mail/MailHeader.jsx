@@ -1,5 +1,5 @@
 import React from 'react';
-import Constants from '../../constants';
+import Constants from '../../../constants';
 const MailHeader = ({
   author = Constants.EMPTY_AUTHOR,
   recipients = Constants.EMPTY_RECIPIENTS,

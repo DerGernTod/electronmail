@@ -1,10 +1,10 @@
-import './mail.less';
+import './styles/mail.less';
 import React from 'react';
-import { Route, Switch } from 'react-router';
+import { Route } from 'react-router';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Preview from './Preview.jsx';
 import ContentPane from './ContentPane.jsx';
-import Constants from '../../constants.js';
+import Constants from '../../../constants';
 const Mail = ({ match, location }) => {
   const { accounts, folder } = match.params;
   return (

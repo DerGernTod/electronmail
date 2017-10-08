@@ -1,5 +1,5 @@
-import './main.less';
-import './content-fade.less';
+import './styles/main.less';
+import './styles/content-fade.less';
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import { NavLink } from 'react-router-dom';

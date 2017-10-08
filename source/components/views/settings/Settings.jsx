@@ -1,14 +1,12 @@
 //import './settings-accounts.less';
-import './settings.less';
+import './styles/settings.less';
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Switch, Route } from 'react-router';
-import AccountTab from './account-components/AccountTab.jsx';
 import AccountTabList from './account-components/AccountTabList.jsx';
 import Calendar from './Calendar.jsx';
 import Profile from './Profile.jsx';
 import Synchronization from './Synchronization.jsx';
-import Constants from '../../constants';
 const Settings = ({location, match}) => {
   return (
     <div className='flex flex-column full-height'>

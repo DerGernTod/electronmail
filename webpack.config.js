@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Babili = require('babili-webpack-plugin');
 const PATHS = {
   build: path.resolve(__dirname, 'build'),
-  app: path.resolve(__dirname, 'source/jsx')
+  app: path.resolve(__dirname, 'source')
 };
 
 var config = {

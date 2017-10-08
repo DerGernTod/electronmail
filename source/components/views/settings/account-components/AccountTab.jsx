@@ -1,10 +1,10 @@
 import React from 'react';
-import './inputs.less';
+import './styles/inputs.less';
 import ModalDialog from '../../utils/ModalDialog.jsx';
-import { deleteAccount, findAccount, updateAccount, addAccount } from '../../../service/accounts';
-import sendMail from '../../../service/mails';
+import { deleteAccount, findAccount, updateAccount, addAccount } from '../../../../service/accounts';
+import sendMail from '../../../../service/mails';
 import { hashHistory } from 'react-router';
-import Constants from '../../../constants';
+import Constants from '../../../../constants';
 let AccountTab = React.createClass({
   propTypes: {
     match: React.PropTypes.shape({
@@ -44,7 +44,7 @@ let AccountTab = React.createClass({
         ...account
       });
     })
-    .catch(error =>
+    .catch(() =>
       this.setState({
         id: 'Invalid id. no account with this id found!'
       })
@@ -76,7 +76,7 @@ let AccountTab = React.createClass({
       formEnabled: true
     });
     sendMail(this.state)
-      .then(response => Promise.resolve(true))
+      .then(() => Promise.resolve(true))
       .catch(error => {
         console.error('Error sending mail', error);
         return Promise.resolve(false);

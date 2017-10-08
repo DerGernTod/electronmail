@@ -1,9 +1,9 @@
-import '../content-pane-fade.less';
-import '../mail-preview.less';
+import '../styles/content-pane-fade.less';
+import '../styles/mail-preview.less';
 import React from 'react';
 import MailHeader from './MailHeader.jsx';
 import HistoryPane from './HistoryPane.jsx';
-import Constants from '../../constants';
+import Constants from '../../../constants';
 const ContentPane = ({match}) => {
   const { mailid } = match.params;
   const mail = Constants.MAILS.find((entry) => {
