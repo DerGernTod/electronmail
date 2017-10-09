@@ -12,7 +12,8 @@ import reducers from './store/reducers';
 const history = createHashHistory();
 const store = createStore(
   reducers,
-  compose(window.devToolsExtension && window.devToolsExtension(), applyMiddleware(routerMiddleware(history), thunkMiddleware, logger))
+  window.devToolsExtension && window.devToolsExtension(),
+  applyMiddleware(routerMiddleware(history), thunkMiddleware, logger)
 );
 ReactDOM.render(
   <Provider store={store}>
