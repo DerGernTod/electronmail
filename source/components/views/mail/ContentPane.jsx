@@ -11,10 +11,8 @@ const ContentPane = ({match}) => {
   });
   if (!mail) {
     return (
-      <div className='contentpane-container'>
-        <div className='flex-center'>
-          <h1>Select a mail to continue</h1>
-        </div>
+      <div className='contentpane-container flex-center align-center'>
+        <h1>Select a mail to continue</h1>
       </div>
     );
   } else {

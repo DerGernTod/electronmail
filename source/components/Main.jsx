@@ -4,14 +4,14 @@ import React from 'react';
 import { Route, Switch } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import Mail from './views/mail/Mail.jsx';
-import Test from './Test.jsx';
+import Mail from 'components/views/mail/Mail.jsx';
+import Test from 'components/Test.jsx';
 import Settings from './views/settings/Settings.jsx';
 //import {get} from './service/nedb';
 
 const Main = ({location}) => {
   var locations = location.pathname.split('/');
-  var mainKey = locations[1]; //0 is always ''
+  var mainKey = locations[1]; //0 is always an empty string
   switch (mainKey) {
   case 'mail':
     mainKey += '/' + (locations[2] || '') + '/' + (locations[3] || '');
@@ -20,7 +20,7 @@ const Main = ({location}) => {
     mainKey += '/' + (locations[2] || '') + '/' + (locations[3] || '');
     break;
   case 'settings':
-      //don't switch if settings directory changes
+      //don't switch if settings directory changes, settings page switches internally
     break;
   default:
     break;

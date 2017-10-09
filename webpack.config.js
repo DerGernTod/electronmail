@@ -21,6 +21,12 @@ var config = {
     }),
     new webpack.IgnorePlugin(/vertx/)
   ],
+  resolve: {
+    modules: [
+      path.resolve('./source'),
+      path.resolve('./node_modules')
+    ]
+  },
   module: {
     rules: [{
       test: /\.(le|c)ss$/,
