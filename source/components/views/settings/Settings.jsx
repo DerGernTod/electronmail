@@ -3,7 +3,7 @@ import './styles/settings.less';
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Switch, Route } from 'react-router';
-import AccountTabList from './account-components/AccountTabList.jsx';
+import AccountTabListContainer from 'containers/views/settings/account/AccountTabListContainer';
 import Calendar from './Calendar.jsx';
 import Profile from './Profile.jsx';
 import Synchronization from './Synchronization.jsx';
@@ -21,7 +21,7 @@ const Settings = ({location, match}) => {
         transitionAppear={true}
         transitionAppearTimeout={500}>
           <Switch key={match.params.page} location={location}>
-            <Route path="/settings/accounts/:account?" component={AccountTabList} />
+            <Route path="/settings/accounts/:account?" component={AccountTabListContainer} />
             <Route path="/settings/calendar" component={Calendar} />
             <Route path="/settings/profile" component={Profile} />
             <Route path="/settings/synchronization" component={Synchronization} />

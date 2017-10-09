@@ -4,7 +4,6 @@ import React from 'react';
 import {Route, Switch} from 'react-router';
 import {NavLink} from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import {findAllAccounts} from '../../../../service/accounts';
 import Constants from '../../../../constants';
 import AccountTab from './AccountTab.jsx';
 const AccountTabList = React.createClass({
@@ -14,12 +13,12 @@ const AccountTabList = React.createClass({
       params: React.PropTypes.shape({
         account: React.PropTypes.string
       })
-    })
+    }),
+    loadAccounts: React.PropTypes.func,
+    loading: React.PropTypes.bool,
+    accounts: React.PropTypes.arrayOf(React.PropTypes.object)
   },
   componentWillMount(){
-    this.setState({
-      accounts: []
-    });
     this.updateAccountList();
   },
   buildAccountPreview(account){
@@ -35,23 +34,17 @@ const AccountTabList = React.createClass({
     );
   },
   updateAccountList(scrollToId) {
-    findAllAccounts()
-    .then(accounts => this.setState({ accounts: accounts.sort((a, b) => {
-      return a.name.localeCompare(b.name);
-    })}))
-    .then(() => {
-      let element = document.getElementById(`accounts-list-id-${scrollToId}`);
-      element && element.scrollIntoViewIfNeeded();
-    });
+    this.props.loadAccounts(scrollToId);
   },
   render(){
     let accountsList = [];
     accountsList.push(this.buildAccountPreview({id: -1, name: 'Create account'}));
-    this.state.accounts.forEach(mail => accountsList.push(this.buildAccountPreview(mail)));
+    const { accounts = [], loading, match, location } = this.props;
+    accounts.forEach(account => accountsList.push(this.buildAccountPreview(account)));
     if (!accountsList.length) {
       accountsList.push(<li>Loading accounts...</li>);
     }
-    let mainKey = this.props.match.params.account;
+    let mainKey = match.params.account;
     return (
       <div className='accounts'>
         <div className='account-tab-list'>
@@ -67,7 +60,7 @@ const AccountTabList = React.createClass({
         transitionLeaveTimeout={500}
         transitionAppear={true}
         transitionAppearTimeout={500}>
-        <Switch key={mainKey} location={this.props.location}>
+        <Switch key={mainKey} location={location}>
           <Route path="/settings/accounts/:account?" component={props =>
             <AccountTab {...props} onAccountCreated={id => this.updateAccountList(id)} onAccountModified={id => this.updateAccountList(id)} />
           } />

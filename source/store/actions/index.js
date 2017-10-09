@@ -1,1 +1,2 @@
-export * from './mails.actions.js';
+export * from './mails.actions';
+export * from './accounts.actions';
