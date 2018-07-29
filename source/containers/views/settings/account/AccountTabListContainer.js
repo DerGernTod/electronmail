@@ -1,4 +1,4 @@
-import AccountTabList from 'components/views/settings/account/AccountTabList.jsx';
+import AccountTabList from 'components/views/settings/account/AccountTabList.tsx';
 import {connect} from 'react-redux';
 import {loadAccounts} from 'store/actions';
 const mapStateToProps = ({accounts}, ownProps) => {

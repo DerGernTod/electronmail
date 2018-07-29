@@ -1,11 +1,12 @@
 import crypto from 'crypto';
-const ALGO = 'aes-256-ctr';
+import { compute } from './bytestokey';
+const ALGO = 'aes-128-ccm';
 let password = 'abcde';
 let oldPassword = password;
 let passwordChangedListeners = [];
 
 /**
- * 
+ *
  * @param {*} callback - requires a callback with two arguments - oldPass and newPass, that returns a promise
  */
 function addPasswordChangedListener(callback) {
@@ -24,18 +25,20 @@ function changePassword(newPass) {
   });
 }
 
-function encrypt(message, pass) {
-  let cipher = crypto.createCipher(ALGO, pass || password);
-  let encrypted = cipher.update(message, 'utf8', 'hex');
-  encrypted += cipher.final('hex');
-  return encrypted;
+function encrypt(message, passPhrase) {
+  // const { key, iv } = compute(ALGO, passPhrase || password);
+  // let cipher = crypto.createCipheriv(ALGO, Buffer.from(key), Buffer.from(iv));
+  // let encrypted = cipher.update(message, 'utf8', 'hex');
+  // encrypted += cipher.final('hex');
+  return message; // encrypted;
 }
 
-function decrypt(encrypted, pass) {
-  let decipher = crypto.createDecipher(ALGO, pass || password);
-  let decrypted = decipher.update(encrypted, 'hex', 'utf8');
-  decrypted += decipher.final('utf8');
-  return decrypted;
+function decrypt(encrypted, passPhrase) {
+  // const { key, iv } = compute(ALGO, passPhrase || password);
+  // let decipher = crypto.createDecipheriv(ALGO, Buffer.from(key), Buffer.from(iv));
+  // let decrypted = decipher.update(encrypted, 'hex', 'utf8');
+  // decrypted += decipher.final('utf8');
+  return encrypted; // decrypted;
 }
 
 export {addPasswordChangedListener, changePassword, encrypt, decrypt};

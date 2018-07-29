@@ -1,18 +1,18 @@
 import * as React from 'react';
 import './styles/inputs.less';
-import ModalDialog from '../../utils/ModalDialog.jsx';
-import { deleteAccount, findAccount, updateAccount, addAccount } from '../../../../service/accounts';
-import sendMail from '../../../../service/mails';
+import ModalDialog from '../../utils/ModalDialog';
+import { deleteAccount, findAccount, updateAccount, addAccount } from 'service/accounts';
+import sendMail from 'service/mails';
 import { HashRouter, withRouter, RouteComponentProps } from 'react-router-dom';
 import Constants, { AuthType } from '../../../../constants';
 import { authenticate, getNewTokenUrl, authenticateWithCode } from 'service/authentication/googleapi';
 
-interface AccountTabRouterMatch {
+interface AccountTabRouterParams {
   account: string
 }
 
-interface AccountTabProps extends RouteComponentProps<AccountTabRouterMatch> {
-  onAccountModified: () => void;
+export interface AccountTabProps extends RouteComponentProps<AccountTabRouterParams> {
+  onAccountModified: (id?: number) => void;
   onAccountCreated: (id: number) => void;
 }
 
@@ -158,7 +158,7 @@ class AccountTab extends React.Component<AccountTabProps, AccountTabState> {
       </fieldset>
     );
   }
-  createElementInput<T extends keyof AccountTabInputs>(name: T, type: InputType, tabIndex: number, options?: string[]) {
+  createElementInput(name: keyof AccountTabInputs, type: InputType, tabIndex: number, options?: string[]) {
     let id = `account-input-${name}`;
     let blurFunc = function () {
       const elem = document.getElementById(id) as HTMLInputElement;

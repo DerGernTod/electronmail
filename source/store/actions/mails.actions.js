@@ -1,4 +1,4 @@
-import Constants from '../../constants';
+import Constants from 'constants';
 import ActionTypes from './ActionTypes';
 export function loadMails(accounts, folder) {
   return dispatch => {

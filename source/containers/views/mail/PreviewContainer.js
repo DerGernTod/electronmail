@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { loadMails } from 'store/actions';
-import Preview from 'components/views/mail/Preview.jsx';
+import Preview from 'components/views/mail/Preview';
 const mapDispatchToProps = (dispatch, { match }) => {
   const {accounts, folder} = match.params;
   return {
