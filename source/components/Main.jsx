@@ -3,7 +3,7 @@ import './styles/content-fade.less';
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { ReactCSSTransitionGroup } from 'react-transition-group';
 import Mail from 'components/views/mail/Mail.jsx';
 import Test from 'components/Test.jsx';
 import Settings from './views/settings/Settings.jsx';

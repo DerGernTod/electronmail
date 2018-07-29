@@ -147,5 +147,33 @@ const EXAMPLE_MAIL = {
   html: '<b>Node.js New world for me</b>'
 };
 const SHOWN_RECIPIENTS = 3;
-const Constants = { EXAMPLE_MAIL, MAILS, EMPTY_AUTHOR, EMPTY_RECIPIENTS, EMPTY_TITLE, SHOWN_RECIPIENTS, ACCOUNTS, ROUTES };
+const GMAIL_CLIENT_ID = '1046916899488-n263soq45qa6h1bpm888p1e742u5f7vc.apps.googleusercontent.com';
+const GMAIL_CLIENT_KEY = 't61wrfulCOTDaMx2g5v9rM1v';
+const AUTH_TYPE_GOOGLE = 'Google';
+const AUTH_TYPE_IMAP = 'SMTP/IMAP';
+const AUTH_TYPE_POP = 'SMTP/POP';
+const AUTHENTICATION_TYPES = [
+  AUTH_TYPE_GOOGLE,
+  AUTH_TYPE_IMAP,
+  AUTH_TYPE_POP
+];
+export const enum AuthType {
+  Google,
+  IMAP,
+  POP
+}
+const Constants = {
+  EXAMPLE_MAIL,
+  MAILS,
+  EMPTY_AUTHOR,
+  EMPTY_RECIPIENTS,
+  EMPTY_TITLE,
+  SHOWN_RECIPIENTS,
+  ACCOUNTS,
+  ROUTES,
+  AUTHENTICATION_TYPES,
+  AUTH_TYPE_GOOGLE,
+  AUTH_TYPE_IMAP,
+  AUTH_TYPE_POP
+};
 export default Constants;

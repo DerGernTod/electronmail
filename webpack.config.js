@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const Babili = require('babili-webpack-plugin');
 const PATHS = {
   build: path.resolve(__dirname, 'build'),
   app: path.resolve(__dirname, 'source')
@@ -9,6 +8,7 @@ const PATHS = {
 
 var config = {
   entry: PATHS.app + '/App.jsx',
+  devtool: 'inline-source-map',
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Electronmail',
@@ -22,34 +22,42 @@ var config = {
     new webpack.IgnorePlugin(/vertx/)
   ],
   resolve: {
+    extensions: [
+      '.tsx', '.ts', '.jsx', '.js'
+    ],
     modules: [
       path.resolve('./source'),
-      path.resolve('./node_modules')
+      path.resolve(__dirname, 'node_modules'),
+      "node_modules"
     ]
   },
   module: {
-    rules: [{
-      test: /\.(le|c)ss$/,
-      include: PATHS.app,
-      use: ['style-loader', 'css-loader', 'less-loader']
-    },
-    {
-      test: /\.jsx?/,
-      include: PATHS.app,
-      use: ['babel-loader']
-    },
-    {
-      test: /\.(ttf|eot|woff|woff2|svg)$/,
-      loader: 'file-loader',
-      options: {
-        name: 'fonts/[name].[ext]',
+    rules: [
+      {
+        test: /\.(ts|tsx|js|jsx)?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
       },
-    }
+      {
+        test: /\.(le|c)ss$/,
+        include: PATHS.app,
+        use: ['style-loader', 'css-loader', 'less-loader']
+      },
+      {
+        test: /\.(ttf|eot|woff|woff2|svg)$/,
+        loader: 'file-loader',
+        options: {
+          name: 'fonts/[name].[ext]',
+        },
+      }
     ]
   },
   output: {
     path: PATHS.build,
     filename: '[name].js'
+  },
+  node: {
+    __dirname: true
   },
   target: 'electron-main'
 };
@@ -60,11 +68,13 @@ module.exports = (env) => {
     minimize: true,
     debug: false
   };
+  cfg.mode = env;
   if (env == 'development') {
     cfg.plugins.push(new webpack.SourceMapDevToolPlugin());
     loaderPluginConfig.debug = true;
   } else {
-    cfg.plugins.push(new Babili());
+    // TODO: use uglify instead
+    // cfg.plugins.push(new Babili());
   }
   cfg.plugins.push(new webpack.LoaderOptionsPlugin(loaderPluginConfig));
   return cfg;

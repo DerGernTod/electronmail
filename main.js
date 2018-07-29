@@ -22,7 +22,9 @@ let mainWindow;
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({ width: 1024, height: 768 });
-
+  electron.session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    callback({responseHeaders: 'default-src "none"'});
+  });
   // and load the index.html of the app.
   var url = `file://${__dirname}/build/index.html`;
   if (process.argv.some(a => a == 'dev')) {

@@ -1,7 +1,7 @@
 import './styles/mail.less';
 import React from 'react';
 import { Route } from 'react-router';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { ReactCSSTransitionGroup } from 'react-transition-group';
 import PreviewContainer from 'containers/views/mail/PreviewContainer';
 import ContentPane from './ContentPane.jsx';
 const Mail = ({ match, location }) => {

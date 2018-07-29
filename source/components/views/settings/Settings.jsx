@@ -1,7 +1,7 @@
 //import './settings-accounts.less';
 import './styles/settings.less';
 import React from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { ReactCSSTransitionGroup } from 'react-transition-group';
 import { Switch, Route } from 'react-router';
 import AccountTabListContainer from 'containers/views/settings/account/AccountTabListContainer';
 import Calendar from './Calendar.jsx';
