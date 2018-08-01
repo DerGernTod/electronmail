@@ -1,8 +1,8 @@
 import { gmail_v1 } from 'googleapis';
 import { OAuth2Client } from 'google-auth-library';
-import secret from '../../google-client-secret.json';
+import secret from '@/google-client-secret';
 import { readFile, mkdirSync, writeFile} from 'fs';
-import { Credentials } from '../../../node_modules/google-auth-library/build/src/auth/credentials';
+import { Credentials } from 'google-auth-library/build/src/auth/credentials';
 const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 const TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
     process.env.USERPROFILE) + '/.credentials/';

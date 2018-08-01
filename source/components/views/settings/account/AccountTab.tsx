@@ -1,11 +1,12 @@
 import * as React from 'react';
 import './styles/inputs.less';
 import ModalDialog from '../../utils/ModalDialog';
-import { deleteAccount, findAccount, updateAccount, addAccount } from 'service/accounts';
-import sendMail from 'service/mails';
+import { deleteAccount, findAccount, updateAccount, addAccount } from '@/service/accounts';
+import sendMail from '@/service/mails';
 import { HashRouter, withRouter, RouteComponentProps } from 'react-router-dom';
-import Constants, { AuthType } from '../../../../constants';
-import { authenticate, getNewTokenUrl, authenticateWithCode } from 'service/authentication/googleapi';
+import Constants, { AuthType } from '../../../../constants'
+import { authenticate, getNewTokenUrl, authenticateWithCode } from '@/service/authentication/googleapi';
+import { NodemailAccount, InputType } from '@/typings';
 
 interface AccountTabRouterParams {
   account: string
@@ -16,23 +17,10 @@ export interface AccountTabProps extends RouteComponentProps<AccountTabRouterPar
   onAccountCreated: (id: number) => void;
 }
 
-interface AccountTabInputs {
-  name: string;
-  address: string;
-  password: string;
-  mailHost: string;
-  mailPort: number;
-  mailSecure: boolean;
-  authType: AuthType;
-  oAuthCode: string;
-  smtpHost: '';
-  smtpPort: number;
-  smtpSecure: boolean;
-}
 
 interface AccountTabState {
   id: number;
-  formInputs: AccountTabInputs;
+  formInputs: NodemailAccount;
   onAccountModified: () => void;
   modalSpinEnabled: boolean;
   mailCheckSuccessful: undefined | boolean;
@@ -79,16 +67,20 @@ class AccountTab extends React.Component<AccountTabProps, AccountTabState> {
     findAccount(id)
     .then(account => {
       console.log('found account', account);
-      if (account.authType == Constants.AUTH_TYPE_GOOGLE) {
+      if (account.authType === AuthType.Google) {
         authenticate().catch(() => {
           this.setStateIfMounted({
             authenticationRequired: true,
-            ...account
+            formInputs: {
+              ...account
+            }
           });
         });
       } else {
         this.setStateIfMounted({
-          ...account
+          formInputs: {
+            ...account
+          }
         });
       }
     })
@@ -108,7 +100,7 @@ class AccountTab extends React.Component<AccountTabProps, AccountTabState> {
   componentWillUnmount() {
     this.isUnmounted = true;
   }
-  handleTextChange(element: keyof AccountTabInputs, evt: Event) {
+  handleTextChange(element: keyof NodemailAccount, evt: Event) {
     const target = evt.target as HTMLInputElement;
     this.setState({
       formInputs: {
@@ -136,18 +128,18 @@ class AccountTab extends React.Component<AccountTabProps, AccountTabState> {
     this.setState({
       formEnabled: true
     });
-    sendMail(this.state)
+    sendMail(this.state.formInputs)
       .then(() => Promise.resolve(true))
-      .catch(error => {
+      .catch((error: Error) => {
         console.error('Error sending mail', error);
         return Promise.resolve(false);
       })
-      .then(success => this.setStateIfMounted({
+      .then((success: boolean) => this.setStateIfMounted({
         mailCheckSuccessful: success,
         formEnabled: false
       }));
   }
-  createInput(name: keyof AccountTabInputs, type: InputType, title: string, tabIndex: number, options?: string[]) {
+  createInput(name: keyof NodemailAccount, type: InputType, title: string, tabIndex: number, options?: string[]) {
     return (
       <fieldset key={`account-input-${tabIndex}`} className="form-fieldset ui-input"
         disabled={this.state.formEnabled} >
@@ -158,7 +150,7 @@ class AccountTab extends React.Component<AccountTabProps, AccountTabState> {
       </fieldset>
     );
   }
-  createElementInput(name: keyof AccountTabInputs, type: InputType, tabIndex: number, options?: string[]) {
+  createElementInput(name: keyof NodemailAccount, type: InputType, tabIndex: number, options?: string[]) {
     let id = `account-input-${name}`;
     let blurFunc = function () {
       const elem = document.getElementById(id) as HTMLInputElement;
@@ -200,7 +192,7 @@ class AccountTab extends React.Component<AccountTabProps, AccountTabState> {
       modalSpinEnabled: true
     });
     deleteAccount(this.state.id)
-      .then(numDeleted => { console.log(`Deleted ${numDeleted} accounts`); })
+      .then((numDeleted: number) => { console.log(`Deleted ${numDeleted} accounts`); })
       .catch(error => { console.log('Error during deletion: ', error); })
       .then(() => {
         this.setStateIfMounted({
@@ -223,12 +215,11 @@ class AccountTab extends React.Component<AccountTabProps, AccountTabState> {
   handleFormSubmit(evt: React.FormEvent) {
     evt.preventDefault();
     let { id } = this.state;
-    let { name, address, mailHost: host, mailPort: port, password, mailSecure: secure } = this.state.formInputs;
     this.setState({
       formEnabled: false
     });
     if (id >= 0) {
-      updateAccount({id, name, address, host, port, password, secure})
+      updateAccount(this.state.formInputs)
       .then(numReplaced => {
         console.log(`Updated ${numReplaced} entries`);
         this.props.onAccountModified();
@@ -240,15 +231,14 @@ class AccountTab extends React.Component<AccountTabProps, AccountTabState> {
       }));
     } else {
       addAccount({
+        ...this.state.formInputs,
         id: Date.now(),
-        name,
-        address,
-        password,
-        host,
-        port,
-        secure
+        name
       })
       .then(id => {
+        if (!id) {
+          throw new Error('Couldn\'t get id from newly created account!');
+        }
         this.props.history.push(`${Constants.ROUTES.accounts}/${id}`);
         this.props.onAccountCreated(id);
       })

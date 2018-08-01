@@ -22,12 +22,18 @@
   "devDependencies": {
     "@types/electron": "^1.6.10",
     "@types/electron-devtools-installer": "^2.2.0",
+    "@types/moment": "^2.13.0",
+    "@types/nedb": "^1.8.5",
     "@types/prop-types": "^15.5.4",
     "@types/react": "^16.4.7",
     "@types/react-dom": "^16.0.6",
+    "@types/react-redux": "^6.0.5",
     "@types/react-router": "^4.0.29",
     "@types/react-router-dom": "^4.3.0",
+    "@types/react-router-redux": "^5.0.15",
     "@types/react-transition-group": "^2.0.11",
+    "@types/redux-logger": "^3.0.6",
+    "@types/redux-thunk": "^2.1.0",
     "@types/webpack": "^4.4.8",
     "concurrently": "^3.5.0",
     "css-loader": "^0.28.0",
@@ -67,6 +73,7 @@
     "webpack-dev-server": "^3.1.5"
   },
   "dependencies": {
+    "@types/nodemailer": "^4.6.2",
     "google-auth-library": "^1.6.1",
     "googleapis": "^32.0.0",
     "imap": "^0.8.19",

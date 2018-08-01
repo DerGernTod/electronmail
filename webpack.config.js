@@ -7,7 +7,7 @@ const PATHS = {
 };
 
 var config = {
-  entry: PATHS.app + '/App.jsx',
+  entry: PATHS.app + '/App.tsx',
   devtool: 'inline-source-map',
   plugins: [
     new HtmlWebpackPlugin({
@@ -29,7 +29,10 @@ var config = {
       path.resolve('./source'),
       path.resolve(__dirname, 'node_modules'),
       "node_modules"
-    ]
+    ],
+    alias: {
+      '@': path.resolve(__dirname, './source')
+    }
   },
   module: {
     rules: [

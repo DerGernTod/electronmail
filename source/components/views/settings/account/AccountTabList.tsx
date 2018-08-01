@@ -4,7 +4,7 @@ import * as React from 'react';
 import {Route, Switch, RouteComponentProps, withRouter} from 'react-router';
 import {NavLink} from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
-import Constants from '../../../../constants';
+import Constants from '../../../../constants'
 import AccountTab, { AccountTabProps } from './AccountTab';
 
 interface Account {

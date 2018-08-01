@@ -1,3 +1,5 @@
+import { Mail } from "@/typings";
+
 const EMPTY_AUTHOR = {
   name: 'Noone',
   email: 'no@one.com'
@@ -16,7 +18,7 @@ const ACCOUNTS = [
     name: 'Gernot Raudner Gmail'
   }
 ];
-const MAILS = [
+const MAILS: Mail[] = [
   {
     author: {
       name: 'some author with a weirdly long name that also doesn\'t fit into the title view',
@@ -24,7 +26,7 @@ const MAILS = [
     },
     title: 'some title',
     content: 'lorem ipsum dolor sit amet. consetetur sadipecing elitr.',
-    date: Date.now(),
+    date: new Date(),
     id: 0,
     unread: true,
     recipients: ['node@radiatedpixel.com'],
@@ -44,7 +46,7 @@ const MAILS = [
                 et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
                 ipsum dolor sit amet.
                 `,
-    date: Date.now() - 60000,
+    date: new Date(Date.now() - 60000),
     id: 1,
     recipients: ['gernot@raudner.at', 'some@dude.com'],
     folder: 'inbox',
@@ -63,7 +65,7 @@ const MAILS = [
                 invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
                 justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
                 sit amet.`,
-    date: Date.now() - 60000*60,
+    date: new Date(Date.now() - 60000*60),
     unread: true,
     id: 2,
     recipients: [
@@ -90,7 +92,7 @@ const MAILS = [
                         et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
                         ipsum dolor sit amet.
                         `,
-        date: Date.now() - 60000,
+        date: new Date(Date.now() - 60000),
         id: 3,
         recipients: ['gernot@raudner.at', 'some@dude.com'],
         folder: 'inbox',
@@ -103,7 +105,7 @@ const MAILS = [
         },
         title: 'some title 3',
         content: 'lorem ipsum dolor sit amet. consetetur sadipecing elitr.',
-        date: Date.now(),
+        date: new Date(),
         id: 4,
         unread: true,
         recipients: [
@@ -130,7 +132,7 @@ const MAILS = [
                         et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
                         ipsum dolor sit amet.
                         `,
-        date: Date.now() - 60000,
+        date: new Date(Date.now() - 60000),
         id: 5,
         recipients: ['gernot@raudner.at', 'some@dude.com'],
         folder: 'inbox',
@@ -171,9 +173,7 @@ const Constants = {
   SHOWN_RECIPIENTS,
   ACCOUNTS,
   ROUTES,
-  AUTHENTICATION_TYPES,
-  AUTH_TYPE_GOOGLE,
-  AUTH_TYPE_IMAP,
-  AUTH_TYPE_POP
+  AUTHENTICATION_TYPES
 };
+
 export default Constants;
