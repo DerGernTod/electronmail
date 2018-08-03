@@ -1,14 +1,6 @@
 const devtoolsInstaller = require('electron-devtools-installer');
 const REACT_DEVELOPER_TOOLS = devtoolsInstaller.REACT_DEVELOPER_TOOLS;
 const REDUX_DEVTOOLS = devtoolsInstaller.REDUX_DEVTOOLS;
-
-devtoolsInstaller.default(REACT_DEVELOPER_TOOLS)
-  .then((name) => console.log(`Added Extension: ${name}`))
-  .catch((err) => console.log(`An error occurred: ${err}`));
-
-devtoolsInstaller.default(REDUX_DEVTOOLS)
-  .then((name) => console.log(`Added Extension: ${name}`))
-  .catch((err) => console.log(`An error occurred: ${err}`));
 const electron = require('electron');
 // Module to control application life.
 const app = electron.app;
@@ -23,7 +15,7 @@ function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({ width: 1024, height: 768 });
   electron.session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
-    callback({responseHeaders: 'default-src "none"'});
+    callback({responseHeaders: `default-src 'none'`});
   });
   // and load the index.html of the app.
   var url = `file://${__dirname}/build/index.html`;
@@ -41,6 +33,14 @@ function createWindow() {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
+  devtoolsInstaller.default(REACT_DEVELOPER_TOOLS)
+  .then((name) => console.log(`Added Extension: ${name}`))
+  .catch((err) => console.log(`An error occurred: ${err}`));
+
+  devtoolsInstaller.default(REDUX_DEVTOOLS)
+    .then((name) => console.log(`Added Extension: ${name}`))
+    .catch((err) => console.log(`An error occurred: ${err}`));
 }
 
 // This method will be called when Electron has finished

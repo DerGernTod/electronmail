@@ -4,7 +4,7 @@
   "description": "An Electron mail application",
   "main": "main.js",
   "scripts": {
-    "build": "webpack --env production",
+    "build": "webpack --progress --env production",
     "webpack:dev": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --progress --env development\"",
     "electron:dev": "electron . dev",
     "start": "electron .",

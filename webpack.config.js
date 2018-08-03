@@ -37,9 +37,12 @@ var config = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx|js|jsx)?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
+        test: /\.(ts|tsx)?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+        options: {
+          experimentalWatchApi: true
+        }
       },
       {
         test: /\.(le|c)ss$/,
