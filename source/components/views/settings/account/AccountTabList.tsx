@@ -1,9 +1,9 @@
 import '../../styles/content-pane-fade.less';
 import './styles/accounts.less';
 import * as React from 'react';
-import {Route, Switch, RouteComponentProps, withRouter} from 'react-router';
-import {NavLink} from 'react-router-dom';
-import { CSSTransition } from 'react-transition-group';
+import { Route, Switch, RouteComponentProps, withRouter } from 'react-router';
+import { NavLink } from 'react-router-dom';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Constants from '../../../../constants'
 import AccountTab, { AccountTabProps } from './AccountTab';
 
@@ -25,11 +25,11 @@ interface AccountTabListProps extends RouteComponentProps<AccountTabListRouterPa
 
 class AccountTabList extends React.Component<AccountTabListProps> {
 
-  componentWillMount(){
+  componentWillMount() {
     this.updateAccountList(-1);
   }
 
-  buildAccountPreview(account: Account){
+  buildAccountPreview(account: Account) {
     let linkTarget = `${Constants.ROUTES.accounts}/${account.id}`;
 
     return (
@@ -46,9 +46,9 @@ class AccountTabList extends React.Component<AccountTabListProps> {
     this.props.loadAccounts(scrollToId === void 0 ? -1 : scrollToId);
   }
 
-  render(){
+  render() {
     let accountsList: JSX.Element[] = [];
-    accountsList.push(this.buildAccountPreview({id: -1, name: 'Create account'}));
+    accountsList.push(this.buildAccountPreview({ id: -1, name: 'Create account' }));
     const { accounts = [], loading, match, location } = this.props;
     accounts.forEach(account => accountsList.push(this.buildAccountPreview(account)));
     if (!accountsList.length) {
@@ -62,22 +62,19 @@ class AccountTabList extends React.Component<AccountTabListProps> {
             {accountsList}
           </ol>
         </div>
-        <CSSTransition
-        component="div"
-        classNames="contentpane"
-        transitionName="content-pane-fade"
-        timeout={{
-          enter: 500,
-          exit: 500
-        }}
-        appear={true}>
-        <Switch key={mainKey} location={location}>
-          <Route path="/settings/accounts/:account?" component={(props: AccountTabProps) =>
-            <AccountTab {...props} onAccountCreated={id => this.updateAccountList(id)} onAccountModified={id => this.updateAccountList(id)} />
-          } />
-        </Switch>
-
-        </CSSTransition>
+        <TransitionGroup className='contentpane'>
+          <CSSTransition
+            classNames="content-pane-fade"
+            timeout={500}
+            appear={true}
+            key={mainKey}>
+            <Switch key={mainKey} location={location}>
+              <Route path="/settings/accounts/:account?" component={(props: AccountTabProps) =>
+                <AccountTab {...props} onAccountCreated={id => this.updateAccountList(id)} onAccountModified={id => this.updateAccountList(id)} />
+              } />
+            </Switch>
+          </CSSTransition>
+        </TransitionGroup>
       </div>
     );
   }

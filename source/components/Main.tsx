@@ -3,27 +3,27 @@ import './styles/content-fade.less';
 import * as React from 'react';
 import { Route, Switch, RouteComponentProps, withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import { CSSTransition } from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import MailComponent from './views/mail/MailComponent';
 import Test from './Test';
 import Settings from './views/settings/Settings';
 //import {get} from './service/nedb';
 
-const Main = ({location}: RouteComponentProps<null>) => {
+const Main = ({ location }: RouteComponentProps<null>) => {
   var locations = location.pathname.split('/');
   var mainKey = locations[1]; //0 is always an empty string
   switch (mainKey) {
-  case 'mail':
-    mainKey += '/' + (locations[2] || '') + '/' + (locations[3] || '');
-    break;
-  case 'attachments':
-    mainKey += '/' + (locations[2] || '') + '/' + (locations[3] || '');
-    break;
-  case 'settings':
+    case 'mail':
+      mainKey += '/' + (locations[2] || '') + '/' + (locations[3] || '');
+      break;
+    case 'attachments':
+      mainKey += '/' + (locations[2] || '') + '/' + (locations[3] || '');
+      break;
+    case 'settings':
       //don't switch if settings directory changes, settings page switches internally
-    break;
-  default:
-    break;
+      break;
+    default:
+      break;
   }
   console.log('mainkey', mainKey);
   console.log('pathname ' + location.pathname);
@@ -52,16 +52,12 @@ const Main = ({location}: RouteComponentProps<null>) => {
           <NavLink to="/settings/synchronization" activeClassName="active">Synchronization</NavLink>
         </nav>
       </div>
-      <CSSTransition
-        component="div"
-        classNames="main-container"
-        transitionName="content-fade"
-        timeout={{
-          enter: 500,
-          exit: 500
-        }}
-        appear={true}
-        transitionAppearTimeout={500}>
+      <TransitionGroup className="main-container">
+        <CSSTransition
+          classNames="content-fade"
+          timeout={500}
+          appear={true}
+          key={mainKey}>
           <Switch key={mainKey} location={location}>
             <Route path="/mail/:accounts/:folder/" component={MailComponent} />
 
@@ -71,7 +67,8 @@ const Main = ({location}: RouteComponentProps<null>) => {
             </Route>
             <Route path="/settings/:page/" component={Settings} />
           </Switch>
-      </CSSTransition>
+        </CSSTransition>
+      </TransitionGroup>
     </div>
   );
 };

@@ -21,7 +21,6 @@ export interface AccountTabProps extends RouteComponentProps<AccountTabRouterPar
 interface AccountTabState {
   id: number;
   formInputs: NodemailAccount;
-  onAccountModified: () => void;
   modalSpinEnabled: boolean;
   mailCheckSuccessful: undefined | boolean;
   formEnabled: boolean;
@@ -32,14 +31,9 @@ interface AccountTabState {
 
 class AccountTab extends React.Component<AccountTabProps, AccountTabState> {
   private isUnmounted = true;
-  getDefaultProps() {
-    return {
-      onAccountModified: () => {},
-      onAccountCreated: () => {}
-    };
-  }
-  getInitialState(): AccountTabState {
-    return {
+  constructor(props: AccountTabProps) {
+    super(props);
+    this.state = {
       id: -1,
       formInputs: {
         name: '',
@@ -55,7 +49,6 @@ class AccountTab extends React.Component<AccountTabProps, AccountTabState> {
         smtpSecure: false
       },
       mailCheckSuccessful: void 0,
-      onAccountModified: () => { },
       modalSpinEnabled: false,
       formEnabled: false,
       authenticationRequired: false,
@@ -65,30 +58,30 @@ class AccountTab extends React.Component<AccountTabProps, AccountTabState> {
   }
   loadAccount(id: number) {
     findAccount(id)
-    .then(account => {
-      console.log('found account', account);
-      if (account.authType === AuthType.Google) {
-        authenticate().catch(() => {
+      .then(account => {
+        console.log('found account', account);
+        if (account.authType === AuthType.Google) {
+          authenticate().catch(() => {
+            this.setStateIfMounted({
+              authenticationRequired: true,
+              formInputs: {
+                ...account
+              }
+            });
+          });
+        } else {
           this.setStateIfMounted({
-            authenticationRequired: true,
             formInputs: {
               ...account
             }
           });
-        });
-      } else {
-        this.setStateIfMounted({
-          formInputs: {
-            ...account
-          }
-        });
-      }
-    })
-    .catch(() =>
-      this.setStateIfMounted({
-        id: -1
+        }
       })
-    );
+      .catch(() =>
+        this.setStateIfMounted({
+          id: -1
+        })
+      );
   }
   componentWillMount() {
     this.isUnmounted = false;
@@ -156,35 +149,35 @@ class AccountTab extends React.Component<AccountTabProps, AccountTabState> {
       const elem = document.getElementById(id) as HTMLInputElement;
       elem.classList.toggle('filled', !!elem.value);
     };
-    switch(type) {
-    case 'checkbox':
-      return <input
-        id={id}
-        type={type}
-        checked={this.state.formInputs[name] as boolean}
-        onChange={this.handleTextChange.bind(this, name)}
-        disabled={this.state.formEnabled}
-        className={this.state.formInputs[name] ? 'filled' : ''}
-        onBlur={blurFunc}/>;
-    case 'select':
-      return <select
-        id={id}
-        tabIndex={tabIndex}
-        className={this.state.formInputs[name] ? 'filled' : ''}
-        onBlur={blurFunc}
-        onChange={this.handleTextChange.bind(this, name)}
-        value={this.state.formInputs[name] as string}>
+    switch (type) {
+      case 'checkbox':
+        return <input
+          id={id}
+          type={type}
+          checked={this.state.formInputs[name] as boolean}
+          onChange={this.handleTextChange.bind(this, name)}
+          disabled={this.state.formEnabled}
+          className={this.state.formInputs[name] ? 'filled' : ''}
+          onBlur={blurFunc} />;
+      case 'select':
+        return <select
+          id={id}
+          tabIndex={tabIndex}
+          className={this.state.formInputs[name] ? 'filled' : ''}
+          onBlur={blurFunc}
+          onChange={this.handleTextChange.bind(this, name)}
+          value={this.state.formInputs[name] as string}>
           {options && options.map(elem => <option key={`${name}-option-${elem}`}>{elem}</option>)}
         </select>;
-    default:
-      return <input
-        type={type}
-        id={id}
-        tabIndex={tabIndex}
-        className={this.state.formInputs[name] ? 'filled' : ''}
-        onBlur={blurFunc}
-        value={this.state.formInputs[name] as string}
-        onChange={this.handleTextChange.bind(this, name)} />;
+      default:
+        return <input
+          type={type}
+          id={id}
+          tabIndex={tabIndex}
+          className={this.state.formInputs[name] ? 'filled' : ''}
+          onBlur={blurFunc}
+          value={this.state.formInputs[name] as string}
+          onChange={this.handleTextChange.bind(this, name)} />;
     }
   }
   onDelete() {
@@ -220,34 +213,34 @@ class AccountTab extends React.Component<AccountTabProps, AccountTabState> {
     });
     if (id >= 0) {
       updateAccount(this.state.formInputs)
-      .then(numReplaced => {
-        console.log(`Updated ${numReplaced} entries`);
-        this.props.onAccountModified();
-      })
-      .catch(error => Promise.resolve(error))
-      .then(error => this.setStateIfMounted({
-        formEnabled: true,
-        error
-      }));
+        .then(numReplaced => {
+          console.log(`Updated ${numReplaced} entries`);
+          this.props.onAccountModified();
+        })
+        .catch(error => Promise.resolve(error))
+        .then(error => this.setStateIfMounted({
+          formEnabled: true,
+          error
+        }));
     } else {
       addAccount({
         ...this.state.formInputs,
         id: Date.now(),
         name
       })
-      .then(id => {
-        if (!id) {
-          throw new Error('Couldn\'t get id from newly created account!');
-        }
-        this.props.history.push(`${Constants.ROUTES.accounts}/${id}`);
-        this.props.onAccountCreated(id);
-      })
-      .catch(error =>
-        this.setStateIfMounted({
-          formEnabled: true,
-          error
+        .then(id => {
+          if (!id) {
+            throw new Error('Couldn\'t get id from newly created account!');
+          }
+          this.props.history.push(`${Constants.ROUTES.accounts}/${id}`);
+          this.props.onAccountCreated(id);
         })
-      );
+        .catch(error =>
+          this.setStateIfMounted({
+            formEnabled: true,
+            error
+          })
+        );
     }
   }
   render() {
@@ -260,48 +253,48 @@ class AccountTab extends React.Component<AccountTabProps, AccountTabState> {
     if (this.state.id >= 0) {
       deleteButton = <button type='button' onClick={() => this.setDeleteModalEnabled(true)}>Delete</button>;
       modal = <ModalDialog spinEnabled={this.state.modalSpinEnabled} onAccept={this.onDelete} onAbort={this.onAbort} header='Really delete?'
-      message={`Do you really want to delete account '${this.state.formInputs.name}'?`} enabled={this.state.deleteModalEnabled} />;
+        message={`Do you really want to delete account '${this.state.formInputs.name}'?`} enabled={this.state.deleteModalEnabled} />;
     }
     let availableInputs = [
     ];
     let title = 'POP';
 
     switch (this.state.formInputs.authType) {
-    case AuthType.IMAP:
-      title = 'IMAP';
+      case AuthType.IMAP:
+        title = 'IMAP';
       // falls through
-    case AuthType.POP:
-      availableInputs.push(
-        this.createInput('address', 'email', 'Address', 2),
-        this.createInput('password', 'password', 'Password', 3),
-        this.createInput('smtpHost', 'text', 'SMTP Host', 4),
-        this.createInput('smtpPort', 'number', 'SMTP Port', 5),
-        this.createInput('smtpSecure', 'checkbox', 'SMTP Secure', 6),
-        this.createInput('mailHost', 'text', `${title} Host`, 7),
-        this.createInput('mailPort', 'number', `${title} Port`, 8),
-        this.createInput('mailSecure', 'checkbox', `${title} Secure`, 9)
-      );
-      break;
-    case AuthType.Google:
-      var authText = 'Start';
-      if (!this.state.authenticationRequired) {
-        authText = 'Clear';
-        availableInputs.push(<div>Authentication completed!</div>);
-      }
-      availableInputs.push(
-        <button type='button' key='authButton' onClick={() => this.openAuthenticationWindow()} disabled={this.state.formEnabled}>
-          {authText} authentication
-        </button>
-      );
-      if (this.state.authenticationRequired) {
+      case AuthType.POP:
         availableInputs.push(
-          this.createInput('oAuthCode', 'text', 'Authentication code', 2),
-          <button disabled={this.state.formEnabled} type='button' key='acceptAuthButton' onClick={() => this.authenticate()}>
-            Authenticate
-          </button>
+          this.createInput('address', 'email', 'Address', 2),
+          this.createInput('password', 'password', 'Password', 3),
+          this.createInput('smtpHost', 'text', 'SMTP Host', 4),
+          this.createInput('smtpPort', 'number', 'SMTP Port', 5),
+          this.createInput('smtpSecure', 'checkbox', 'SMTP Secure', 6),
+          this.createInput('mailHost', 'text', `${title} Host`, 7),
+          this.createInput('mailPort', 'number', `${title} Port`, 8),
+          this.createInput('mailSecure', 'checkbox', `${title} Secure`, 9)
         );
-      }
-      break;
+        break;
+      case AuthType.Google:
+        var authText = 'Start';
+        if (!this.state.authenticationRequired) {
+          authText = 'Clear';
+          availableInputs.push(<div>Authentication completed!</div>);
+        }
+        availableInputs.push(
+          <button type='button' key='authButton' onClick={() => this.openAuthenticationWindow()} disabled={this.state.formEnabled}>
+            {authText} authentication
+        </button>
+        );
+        if (this.state.authenticationRequired) {
+          availableInputs.push(
+            this.createInput('oAuthCode', 'text', 'Authentication code', 2),
+            <button disabled={this.state.formEnabled} type='button' key='acceptAuthButton' onClick={() => this.authenticate()}>
+              Authenticate
+          </button>
+          );
+        }
+        break;
     }
     return (
       <div className='contentpane-container'>

@@ -1,7 +1,7 @@
 import './styles/mail.less';
 import * as React from 'react';
 import { Route, RouteComponentProps, withRouter } from 'react-router';
-import { CSSTransition } from 'react-transition-group';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ContentPane from './ContentPane';
 import PreviewContainer from '@/containers/views/mail/PreviewContainer';
 
@@ -10,17 +10,15 @@ const MailComponent = ({ match, location }: RouteComponentProps<FolderPropsRoute
   return (
     <div className='flex'>
       <PreviewContainer />
-      <CSSTransition
-        component="div"
-        classNames="contentpane float-left"
-        timeout={{
-          enter: 500,
-          exit: 500
-        }}
-        appear={true}
-        transitionName="content-pane-fade">
-        <Route path={`/mail/${accounts}/${folder}/:mailid?`} key={location.pathname} component={ContentPane} location={location} />
-      </CSSTransition>
+      <TransitionGroup className="contentpane float-left">
+        <CSSTransition
+          classNames="content-pane-fade"
+          timeout={500}
+          appear={true}
+          key={location.pathname}>
+          <Route path={`/mail/${accounts}/${folder}/:mailid?`} key={location.pathname} component={ContentPane} location={location} />
+        </CSSTransition>
+      </TransitionGroup>
     </div>
   );
 };

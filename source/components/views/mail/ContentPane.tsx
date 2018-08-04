@@ -21,18 +21,18 @@ const ContentPane = ({match}: RouteComponentProps<ContentPaneRouterParams>) => {
         <h1>Select a mail to continue</h1>
       </div>
     );
-  } else {
-    return (
-      <div className='contentpane-container'>
-        <MailHeader
-          author={mail.author}
-          recipients={mail.recipients}
-          title={mail.title}/>
-        <div className='mail-content'>{mail.content}</div>
-        {mail.history ? <HistoryPane historyData={mail.history} /> : null}
-      </div>
-    );
   }
+  return (
+    <div className='contentpane-container'>
+      <MailHeader
+        author={mail.author}
+        recipients={mail.recipients}
+        title={mail.title}/>
+      <div className='mail-content'>{mail.content}</div>
+      {mail.history ? <HistoryPane historyData={mail.history} /> : null}
+    </div>
+  );
+
 };
 
 export default withRouter(ContentPane);
